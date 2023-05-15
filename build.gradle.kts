@@ -25,9 +25,11 @@ dependencies {
 	implementation("org.mybatis:mybatis:3.5.13")
 	// https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
 	implementation("org.xerial:sqlite-jdbc:3.41.2.1")
-// https://mvnrepository.com/artifact/com.enigmabridge/hibernate4-sqlite-dialect
-	implementation("com.enigmabridge:hibernate4-sqlite-dialect:0.1.2")
+// https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-community-dialects
+	implementation("org.hibernate.orm:hibernate-community-dialects:6.2.2.Final")
 
+// https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+	implementation("org.hibernate.orm:hibernate-core:6.2.2.Final")
 
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
