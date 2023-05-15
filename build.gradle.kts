@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-jersey")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
