@@ -14,6 +14,11 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jersey")
+	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+	implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
+	implementation("org.projectlombok:lombok:1.18.26")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
