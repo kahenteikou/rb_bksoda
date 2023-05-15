@@ -2,9 +2,14 @@ spring:
   datasource:
     url: jdbc:sqlite:./db.sqlite3
     driverClassName: org.sqlite.JDBC
+    username: admin
+    passwd: admin
   jpa:
     properties:
       hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
         dialect: org.hibernate.community.dialect.SQLiteDialect
+        ddl-auto: create-drop
+hibernate:
+  show_sql: true
+  hbm2ddl:
+    auto: create
