@@ -3,6 +3,7 @@ package io.github.kahenteikou.quizapp.web.rb_bksoda.controller.v1;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.model.User;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class UserController {
+    @NotNull
     private final UserRepository userRepository;
     @Operation(summary = "Get all users")
     @GetMapping("/")
     List<User> findAll(){
         return userRepository.findAll();
     }
-    
+
 }

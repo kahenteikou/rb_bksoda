@@ -13,11 +13,20 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-jersey")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
-	implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
-	implementation("org.projectlombok:lombok:1.18.26")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+
+
+	compileOnly ("org.projectlombok:lombok:1.18.26")
+	annotationProcessor ("org.projectlombok:lombok:1.18.26")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+// https://mvnrepository.com/artifact/org.mybatis/mybatis
+	implementation("org.mybatis:mybatis:3.5.13")
+	// https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
+	implementation("org.xerial:sqlite-jdbc:3.41.2.1")
+
+
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
