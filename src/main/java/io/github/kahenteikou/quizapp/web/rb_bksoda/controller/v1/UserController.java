@@ -25,6 +25,21 @@ public class UserController {
     User save(@RequestBody User user){
         return userRepository.save(user);
     }
-    
+    @Operation(summary = "Get a user by id")
+    @GetMapping("/{id}")
+    User findById(@PathVariable Long id){
+        return userRepository.findById(id).get();
+    }
+    User save(@RequestBody User newUser,@PathVariable Long id){
+        return userRepository.findById(id).map(user->{
+            user.setUsername(newUser.getUsername());
+            user.setDisplayname(newUser.getDisplayname());
+            user.setDescription(newUser.getDescription());
+            return userRepository.save(user);
+        }).orElseGet(()->{
+            newUser.setId(id);
+            return userRepository.save(newUser);
+        });
+    }
 
 }
