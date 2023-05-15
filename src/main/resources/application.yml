@@ -7,9 +7,12 @@ spring:
   jpa:
     properties:
       hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        use-new-id-generator-mappings: false
         dialect: org.hibernate.community.dialect.SQLiteDialect
         ddl-auto: create-drop
 hibernate:
   show_sql: true
   hbm2ddl:
-    auto: create
+    auto: create-drop
