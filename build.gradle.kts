@@ -25,6 +25,8 @@ dependencies {
 	implementation("org.mybatis:mybatis:3.5.13")
 	// https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
 	implementation("org.xerial:sqlite-jdbc:3.41.2.1")
+// https://mvnrepository.com/artifact/com.enigmabridge/hibernate4-sqlite-dialect
+	implementation("com.enigmabridge:hibernate4-sqlite-dialect:0.1.2")
 
 
 
