@@ -55,4 +55,10 @@ public class QuestionController {
         question_Repository.deleteById(id);
     }
 
+
+    @Operation(summary = "Get all questions QS")
+    @GetMapping("/qs/{qs_id}")
+    List<Question> findAll_QS(@PathVariable Long qs_id){
+        return question_Repository.findAll().stream().filter(q->q.getQuestion_ls_id()==qs_id).toList();
+    }
 }
