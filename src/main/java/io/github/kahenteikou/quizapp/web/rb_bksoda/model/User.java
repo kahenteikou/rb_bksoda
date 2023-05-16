@@ -18,7 +18,6 @@ import lombok.Setter;
 @Setter
 public class User {
     @Id
-    @GeneratedValue
     private Long id;
     @NotBlank
     @Size(max=255)
