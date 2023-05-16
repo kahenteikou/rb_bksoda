@@ -10,18 +10,10 @@ import lombok.Setter;
 @Table(name="Question")
 @Getter
 @Setter
-public class Question {
+public class Question_Set {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotBlank
-    private String question_name;
-    @NotBlank
-    private String content;
-    @NotBlank
-    private String answer;
-    @NotBlank
-    private Long question_ls_id;
-
+    private String questionset_name;
 }
