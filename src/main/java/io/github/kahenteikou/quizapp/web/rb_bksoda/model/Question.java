@@ -25,5 +25,16 @@ public class Question {
     private Long question_ls_id;
     @NotBlank
     private Long order_no;
+    public Question(){
+        super();
+    }
+    public Question(Question q1){
+        super();
+        this.question_name=q1.question_name;
+        this.content=q1.content;
+        this.answer=q1.answer;
+        this.question_ls_id=q1.question_ls_id;
+        this.order_no=q1.order_no;
+    }
 
 }
