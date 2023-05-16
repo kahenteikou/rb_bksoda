@@ -21,16 +21,8 @@ dependencies {
 	compileOnly ("org.projectlombok:lombok:1.18.26")
 	annotationProcessor ("org.projectlombok:lombok:1.18.26")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-// https://mvnrepository.com/artifact/org.mybatis/mybatis
-	implementation("org.mybatis:mybatis:3.5.13")
-	// https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
-	implementation("org.xerial:sqlite-jdbc:3.41.2.1")
-// https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-community-dialects
-	implementation("org.hibernate.orm:hibernate-community-dialects:6.2.2.Final")
-
-// https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
-	implementation("org.hibernate.orm:hibernate-core:6.2.2.Final")
-
+	// https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
+	implementation("org.mariadb.jdbc:mariadb-java-client:3.1.4")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
