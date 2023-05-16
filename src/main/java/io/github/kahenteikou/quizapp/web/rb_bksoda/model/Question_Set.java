@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="Question")
+@Table(name="Question_Set")
 @Getter
 @Setter
 public class Question_Set {
@@ -16,4 +16,11 @@ public class Question_Set {
     private Long id;
     @NotBlank
     private String questionset_name;
+    public Question_Set() {
+        super();
+    }
+    public Question_Set(Question_Set qs){
+        super();
+        this.questionset_name=qs.questionset_name;
+    }
 }

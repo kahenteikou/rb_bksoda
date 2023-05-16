@@ -27,7 +27,7 @@ public class Question_SetController {
     @Operation(summary = "Create a new question set")
     @PostMapping("/")
     Question_Set save(@RequestBody Question_Set qs){
-        return question_setRepository.save(qs);
+        return question_setRepository.save(new Question_Set(qs));
     }
 
     @Operation(summary = "Get a question set by id")
