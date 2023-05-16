@@ -5,7 +5,6 @@ import io.github.kahenteikou.quizapp.web.rb_bksoda.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
