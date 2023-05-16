@@ -23,5 +23,7 @@ public class Question {
     private String answer;
     @NotBlank
     private Long question_ls_id;
+    @NotBlank
+    private Long order_no;
 
 }
