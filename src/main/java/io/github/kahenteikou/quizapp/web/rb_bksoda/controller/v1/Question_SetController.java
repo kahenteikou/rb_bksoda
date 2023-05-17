@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class Question_SetController {
-    @NotNull
+/*    @NotNull
     private final Question_SetRepository question_setRepository;
 
     @Operation(summary = "Get all sets")
@@ -50,6 +50,7 @@ public class Question_SetController {
     @DeleteMapping("/{id}")
     void deleteById(@PathVariable String id){
         question_setRepository.deleteById(id);
-    }
+    }*/
+
 
 }

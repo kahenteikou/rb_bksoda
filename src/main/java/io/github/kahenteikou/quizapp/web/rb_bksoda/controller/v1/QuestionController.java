@@ -16,6 +16,8 @@ import java.util.List;
 public class QuestionController {
     @NotNull
     private final Question_Repository question_Repository;
+    @NotNull
+    private final Question_SetRepository question_setRepository;
 
     @Operation(summary = "Get all questions")
     @GetMapping("/question/")
@@ -51,6 +53,19 @@ public class QuestionController {
     @DeleteMapping("/question/{id}")
     void deleteById(@PathVariable String id){
         question_Repository.deleteById(id);
+    }
+
+    @Operation(summary = "Get all sets")
+    @GetMapping("/question_set/")
+    List<Question_Set> findAll_QS(){
+        return question_setRepository.findAll();
+    }
+
+
+    @Operation(summary = "Create a new question set")
+    @PostMapping("/question_set/")
+    Question_Set QS_save(@RequestBody Question_Set qs){
+        return question_setRepository.save(new Question_Set(qs));
     }
 
 }
