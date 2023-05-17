@@ -31,34 +31,26 @@ public class QuestionController {
 
     @Operation(summary = "Get a question  by id")
     @GetMapping("/{id}")
-    Question findById(@PathVariable Long id){
+    Question findById(@PathVariable String id){
         return question_Repository.findById(id).get();
     }
     @Operation(summary = "Update question")
     @PutMapping("/{id}")
-    Question save(@RequestBody Question newq,@PathVariable Long id){
+    Question save(@RequestBody Question newq,@PathVariable String id){
         return question_Repository.findById(id).map(q->{
-            q.setQuestion_ls_id(newq.getQuestion_ls_id());
             q.setContent(newq.getContent());
             q.setAnswer(newq.getAnswer());
             q.setQuestion_name(newq.getQuestion_name());
-            q.setOrder_no(newq.getOrder_no());
             return question_Repository.save(q);
         }).orElseGet(()->{
-            newq.setId(id);
+            newq.setUuid(id);
             return question_Repository.save(newq);
         });
     }
     @Operation(summary = "Delete a question  by id")
     @DeleteMapping("/{id}")
-    void deleteById(@PathVariable Long id){
+    void deleteById(@PathVariable String id){
         question_Repository.deleteById(id);
     }
-
-
-    @Operation(summary = "Get all questions QS")
-    @GetMapping("/qs/{qs_id}")
-    List<Question> findAll_QS(@PathVariable Long qs_id){
-        return question_Repository.findAll().stream().filter(q->q.getQuestion_ls_id()==qs_id).toList();
-    }
+    
 }
