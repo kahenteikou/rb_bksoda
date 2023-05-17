@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RequestMapping("api/v1/question")
+@RequestMapping("api/v1/question_db")
 @RequiredArgsConstructor
 @RestController
 public class QuestionController {
@@ -18,24 +18,24 @@ public class QuestionController {
     private final Question_Repository question_Repository;
 
     @Operation(summary = "Get all questions")
-    @GetMapping("/")
+    @GetMapping("/question/")
     List<Question> findAll(){
         return question_Repository.findAll();
     }
 
     @Operation(summary = "Create a new question")
-    @PostMapping("/")
+    @PostMapping("/question/")
     Question save(@RequestBody Question q){
         return question_Repository.save(new Question(q));
     }
 
     @Operation(summary = "Get a question  by id")
-    @GetMapping("/{id}")
+    @GetMapping("/question/{id}")
     Question findById(@PathVariable String id){
         return question_Repository.findById(id).get();
     }
     @Operation(summary = "Update question")
-    @PutMapping("/{id}")
+    @PutMapping("/question/{id}")
     Question save(@RequestBody Question newq,@PathVariable String id){
         return question_Repository.findById(id).map(q->{
             q.setContent(newq.getContent());
@@ -48,9 +48,9 @@ public class QuestionController {
         });
     }
     @Operation(summary = "Delete a question  by id")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/question/{id}")
     void deleteById(@PathVariable String id){
         question_Repository.deleteById(id);
     }
-    
+
 }
