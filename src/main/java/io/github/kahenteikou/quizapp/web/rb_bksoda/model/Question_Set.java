@@ -18,11 +18,14 @@ public class Question_Set {
     private String uuid;
     @NotBlank
     private String questionset_name;
+    @NotBlank
+    private String question_list;
     public Question_Set() {
         super();
     }
     public Question_Set(Question_Set qs){
         super();
         this.questionset_name=qs.questionset_name;
+        this.question_list=qs.question_list;
     }
 }
