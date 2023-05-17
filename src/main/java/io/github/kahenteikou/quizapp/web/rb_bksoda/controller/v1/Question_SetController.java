@@ -32,23 +32,23 @@ public class Question_SetController {
 
     @Operation(summary = "Get a question set by id")
     @GetMapping("/{id}")
-    Question_Set findById(@PathVariable Long id){
+    Question_Set findById(@PathVariable String id){
         return question_setRepository.findById(id).get();
     }
     @Operation(summary = "Update question set")
     @PutMapping("/{id}")
-    Question_Set save(@RequestBody Question_Set newqs,@PathVariable Long id){
+    Question_Set save(@RequestBody Question_Set newqs,@PathVariable String id){
         return question_setRepository.findById(id).map(qs->{
             qs.setQuestionset_name(newqs.getQuestionset_name());
             return question_setRepository.save(qs);
         }).orElseGet(()->{
-            newqs.setId(id);
+            newqs.setUuid(id);
             return question_setRepository.save(newqs);
         });
     }
     @Operation(summary = "Delete a question set by id")
     @DeleteMapping("/{id}")
-    void deleteById(@PathVariable Long id){
+    void deleteById(@PathVariable String id){
         question_setRepository.deleteById(id);
     }
 

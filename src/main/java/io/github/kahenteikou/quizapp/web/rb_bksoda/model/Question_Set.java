@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="Question_Set")
@@ -12,8 +13,9 @@ import lombok.Setter;
 @Setter
 public class Question_Set {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GenericGenerator(name="UuidGenerator",strategy = "io.github.kahenteikou.quizapp.web.rb_bksoda.generator.UuidGenerator")
+    @GeneratedValue(generator = "UuidGenerator")
+    private String uuid;
     @NotBlank
     private String questionset_name;
     public Question_Set() {
