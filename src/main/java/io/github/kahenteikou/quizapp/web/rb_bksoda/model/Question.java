@@ -15,6 +15,7 @@ public class Question {
     @Id
     @GenericGenerator(name="UuidGenerator",strategy = "io.github.kahenteikou.quizapp.web.rb_bksoda.generator.UuidGenerator")
     @GeneratedValue(generator = "UuidGenerator")
+    @Size(max=50)
     private String uuid;
 
     @NotBlank
