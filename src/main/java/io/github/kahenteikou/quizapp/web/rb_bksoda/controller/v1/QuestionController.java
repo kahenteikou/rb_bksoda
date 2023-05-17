@@ -68,4 +68,25 @@ public class QuestionController {
         return question_setRepository.save(new Question_Set(qs));
     }
 
+    @Operation(summary = "Get a question set by id")
+    @GetMapping("/question_set/{id}")
+    Question_Set findById_QS(@PathVariable String id){
+        return question_setRepository.findById(id).get();
+    }
+    @Operation(summary = "Update question set")
+    @PutMapping("/question_set/{id}")
+    Question_Set save_QS(@RequestBody Question_Set newqs,@PathVariable String id){
+        return question_setRepository.findById(id).map(qs->{
+            qs.setQuestionset_name(newqs.getQuestionset_name());
+            return question_setRepository.save(qs);
+        }).orElseGet(()->{
+            newqs.setUuid(id);
+            return question_setRepository.save(newqs);
+        });
+    }
+    @Operation(summary = "Delete a question set by id")
+    @DeleteMapping("/question_set/{id}")
+    void deleteById_QS(@PathVariable String id){
+        question_setRepository.deleteById(id);
+    }
 }
