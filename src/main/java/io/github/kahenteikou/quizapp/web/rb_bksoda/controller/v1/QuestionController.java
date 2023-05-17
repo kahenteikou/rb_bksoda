@@ -10,55 +10,83 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RequestMapping("api/v1/question")
+@RequestMapping("api/v1/question_db")
 @RequiredArgsConstructor
 @RestController
 public class QuestionController {
     @NotNull
     private final Question_Repository question_Repository;
+    @NotNull
+    private final Question_SetRepository question_setRepository;
 
     @Operation(summary = "Get all questions")
-    @GetMapping("/")
+    @GetMapping("/question/")
     List<Question> findAll(){
         return question_Repository.findAll();
     }
 
     @Operation(summary = "Create a new question")
-    @PostMapping("/")
+    @PostMapping("/question/")
     Question save(@RequestBody Question q){
         return question_Repository.save(new Question(q));
     }
 
     @Operation(summary = "Get a question  by id")
-    @GetMapping("/{id}")
-    Question findById(@PathVariable Long id){
+    @GetMapping("/question/{id}")
+    Question findById(@PathVariable String id){
         return question_Repository.findById(id).get();
     }
     @Operation(summary = "Update question")
-    @PutMapping("/{id}")
-    Question save(@RequestBody Question newq,@PathVariable Long id){
+    @PutMapping("/question/{id}")
+    Question save(@RequestBody Question newq,@PathVariable String id){
         return question_Repository.findById(id).map(q->{
-            q.setQuestion_ls_id(newq.getQuestion_ls_id());
             q.setContent(newq.getContent());
             q.setAnswer(newq.getAnswer());
             q.setQuestion_name(newq.getQuestion_name());
-            q.setOrder_no(newq.getOrder_no());
             return question_Repository.save(q);
         }).orElseGet(()->{
-            newq.setId(id);
+            newq.setUuid(id);
             return question_Repository.save(newq);
         });
     }
     @Operation(summary = "Delete a question  by id")
-    @DeleteMapping("/{id}")
-    void deleteById(@PathVariable Long id){
+    @DeleteMapping("/question/{id}")
+    void deleteById(@PathVariable String id){
         question_Repository.deleteById(id);
     }
 
+    @Operation(summary = "Get all sets")
+    @GetMapping("/question_set/")
+    List<Question_Set> findAll_QS(){
+        return question_setRepository.findAll();
+    }
 
-    @Operation(summary = "Get all questions QS")
-    @GetMapping("/qs/{qs_id}")
-    List<Question> findAll_QS(@PathVariable Long qs_id){
-        return question_Repository.findAll().stream().filter(q->q.getQuestion_ls_id()==qs_id).toList();
+
+    @Operation(summary = "Create a new question set")
+    @PostMapping("/question_set/")
+    Question_Set QS_save(@RequestBody Question_Set qs){
+        return question_setRepository.save(new Question_Set(qs));
+    }
+
+    @Operation(summary = "Get a question set by id")
+    @GetMapping("/question_set/{id}")
+    Question_Set findById_QS(@PathVariable String id){
+        return question_setRepository.findById(id).get();
+    }
+    @Operation(summary = "Update question set")
+    @PutMapping("/question_set/{id}")
+    Question_Set save_QS(@RequestBody Question_Set newqs,@PathVariable String id){
+        return question_setRepository.findById(id).map(qs->{
+            qs.setQuestionset_name(newqs.getQuestionset_name());
+            return question_setRepository.save(qs);
+        }).orElseGet(()->{
+            newqs.setUuid(id);
+            return question_setRepository.save(newqs);
+        });
+    }
+    @Operation(summary = "Delete a question set by id")
+    @DeleteMapping("/question_set/{id}")
+    void deleteById_QS(@PathVariable String id){
+        question_setRepository.deleteById(id);
     }
 }
