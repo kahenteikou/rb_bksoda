@@ -20,5 +20,10 @@
         "webpack": "^5.83.1",
         "webpack-cli": "^5.1.1",
         "webpack-dev-server": "^4.15.0"
+    },
+    "scripts": {
+      "react-build": "webpack -c webpack.release.config.js  --progress --color",
+      "build": "yarn react-build",
+      "start": "cross-env NODE_ENV=\"development\"  webpack-dev-server -c webpack.dev.config.js"
     }
 }
