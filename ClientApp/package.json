@@ -25,5 +25,6 @@
       "react-build": "webpack -c webpack.release.config.js  --progress --color",
       "build": "yarn react-build",
       "start": "cross-env NODE_ENV=\"development\"  webpack-dev-server -c webpack.dev.config.js"
-    }
+    },
+    "proxy": "http://localhost:8080"
 }
