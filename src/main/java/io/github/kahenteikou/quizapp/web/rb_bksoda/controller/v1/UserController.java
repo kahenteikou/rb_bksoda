@@ -27,25 +27,25 @@ public class UserController {
     }
     @Operation(summary = "Get a user by id")
     @GetMapping("/{id}")
-    User findById(@PathVariable Long id){
+    User findById(@PathVariable String id){
         return userRepository.findById(id).get();
     }
     @Operation(summary = "Update User")
     @PutMapping("/{id}")
-    User save(@RequestBody User newUser,@PathVariable Long id){
+    User save(@RequestBody User newUser,@PathVariable String id){
         return userRepository.findById(id).map(user->{
             user.setUsername(newUser.getUsername());
             user.setDisplayname(newUser.getDisplayname());
             user.setDescription(newUser.getDescription());
             return userRepository.save(user);
         }).orElseGet(()->{
-            newUser.setId(id);
+            newUser.setUuid(id);
             return userRepository.save(newUser);
         });
     }
     @Operation(summary = "Delete a user by id")
     @DeleteMapping("/{id}")
-    void deleteById(@PathVariable Long id){
+    void deleteById(@PathVariable String id){
         userRepository.deleteById(id);
     }
 
