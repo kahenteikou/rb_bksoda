@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * This class represents a user.
@@ -15,8 +16,10 @@ import lombok.Setter;
 @Setter
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GenericGenerator(name="UuidGenerator",strategy = "io.github.kahenteikou.quizapp.web.rb_bksoda.generator.UuidGenerator")
+    @GeneratedValue(generator = "UuidGenerator")
+    @Size(max=50)
+    private String uuid;
     @NotBlank
     @Size(max=255)
     private String username;
