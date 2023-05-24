@@ -4,6 +4,9 @@
     "author": "jouhouhan",
     "license": "MIT",
     "dependencies": {
+        "@mui/icons-material": "^5.11.16",
+        "@mui/material": "^5.13.2",
+        "@mui/types": "^7.2.4",
         "cross-env": "^7.0.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -22,9 +25,9 @@
         "webpack-dev-server": "^4.15.0"
     },
     "scripts": {
-      "react-build": "webpack -c webpack.release.config.js  --progress --color",
-      "build": "yarn react-build",
-      "start": "cross-env NODE_ENV=\"development\"  webpack-dev-server -c webpack.dev.config.js"
+        "react-build": "webpack -c webpack.release.config.js  --progress --color",
+        "build": "yarn react-build",
+        "start": "cross-env NODE_ENV=\"development\"  webpack-dev-server -c webpack.dev.config.js"
     },
     "proxy": "http://localhost:8080"
 }
