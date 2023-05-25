@@ -22,6 +22,7 @@ public class UserController {
 
         List<User> resultval= userRepository.findAll();
         hsr.setHeader("X-Total-Count", String.valueOf(resultval.size()));
+        hsr.setHeader("Access-Control-Expose-Headers", "X-Total-Count");
         return resultval;
     }
     @Operation(summary = "Create a new user")
