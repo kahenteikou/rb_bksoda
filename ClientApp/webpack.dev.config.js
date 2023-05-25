@@ -4,10 +4,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'development';
 module.exports = {
     mode: isDev ? 'development' : 'production',
-    entry: "./src/index.tsx",
+    entry: {
+        "index":"./src/index.tsx",
+        "admin/index":"./src/index.tsx",},   
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: "index.js"
+        filename: "[name].js"
     },
     resolve: {
         extensions: ['.js', '.json', '.ts', '.tsx']
@@ -44,6 +46,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: 'usermanager.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'admin/usermanager.html'
         }),
         new CopyWebpackPlugin(
             {

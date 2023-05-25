@@ -16,7 +16,7 @@ public class UserController {
     @NotNull
     private final UserRepository userRepository;
     @Operation(summary = "Get all users")
-    @GetMapping("/")
+    @GetMapping({"/",""})
     List<User> findAll(){
         return userRepository.findAll();
     }
