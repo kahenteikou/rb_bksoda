@@ -3,6 +3,7 @@ package io.github.kahenteikou.quizapp.web.rb_bksoda.controller.v1;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.model.User;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,11 @@ public class UserController {
     private final UserRepository userRepository;
     @Operation(summary = "Get all users")
     @GetMapping({"/",""})
-    List<User> findAll(){
-        return userRepository.findAll();
+    List<User> findAll(HttpServletResponse hsr){
+
+        List<User> resultval= userRepository.findAll();
+        hsr.setHeader("X-Total-Count", String.valueOf(resultval.size()));
+        return resultval;
     }
     @Operation(summary = "Create a new user")
     @PostMapping("/")
