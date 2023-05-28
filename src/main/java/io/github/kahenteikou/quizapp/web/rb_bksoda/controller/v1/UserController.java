@@ -1,6 +1,7 @@
 package io.github.kahenteikou.quizapp.web.rb_bksoda.controller.v1;
 
 import io.github.kahenteikou.quizapp.web.rb_bksoda.model.User;
+import io.github.kahenteikou.quizapp.web.rb_bksoda.model.UserJData;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,12 +19,14 @@ public class UserController {
     private final UserRepository userRepository;
     @Operation(summary = "Get all users")
     @GetMapping({"/",""})
-    List<User> findAll(HttpServletResponse hsr){
+    UserJData findAll(HttpServletResponse hsr){
 
         List<User> resultval= userRepository.findAll();
         hsr.setHeader("X-Total-Count", String.valueOf(resultval.size()));
         hsr.setHeader("Access-Control-Expose-Headers", "X-Total-Count");
-        return resultval;
+        UserJData dt= new UserJData();
+        dt.setData(resultval);
+        return dt;
     }
     @Operation(summary = "Create a new user")
     @PostMapping("/")
