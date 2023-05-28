@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect } from 'react';
-import { Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 export default function UserManagerPage(): React.ReactElement {
     const {getAllUsers,users}=useAllUsers();
@@ -39,6 +39,18 @@ export default function UserManagerPage(): React.ReactElement {
                         </TableCell>
                     </TableRow>
                 </TableHead>
+                <TableBody>
+                    {users.map((user)=>(
+                        <TableRow key={user.uuid}>
+                            <TableCell component="th" scope="row">
+                                {user.username}
+                            </TableCell>
+                            <TableCell align="right">{user.displayname}</TableCell>
+                            <TableCell align="right">{user.uuid}</TableCell>
+                            <TableCell align="right">{user.description}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
             </Table>
         </TableContainer>
         </>
