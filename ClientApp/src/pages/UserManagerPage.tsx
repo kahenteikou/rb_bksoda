@@ -1,22 +1,21 @@
 import * as React from 'react';
+import { useAllUsers } from '../hooks/useAllUsers';
+import { useEffect } from 'react';
 
 export default function UserManagerPage(): React.ReactElement {
-    const [users,setUsers]=React.useState<any>([]);
-    React.useEffect(()=>{
-        fetch("http://localhost:8080/api/v1/users/",{method:"GET"})
-        .then((res)=>res.json())
-        .then((data)=>{
-            setUsers(data);
-        });
+    const {getAllUsers,users}=useAllUsers();
+    useEffect(()=>{
+        getAllUsers();
     },[]);
     return (
         <>
         UserManagerPage<br/>
         <ul>
             {
-                users.map((user: { username: string; })=>
+                users.map((user)=>
                 <><li>username:{user.username}</li>
-                <li></li>
+                <br/>
+                <li>uuid:{user.uuid}</li>
                 </>)
             }
         </ul></>
