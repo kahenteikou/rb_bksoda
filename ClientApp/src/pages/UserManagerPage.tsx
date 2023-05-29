@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function UserManagerPage(): React.ReactElement {
     const {getAllUsers,users}=useAllUsers();
@@ -37,6 +38,9 @@ export default function UserManagerPage(): React.ReactElement {
                         <TableCell align="right">
                             description
                         </TableCell>
+                        <TableCell align="right">
+                            Edit
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -48,6 +52,11 @@ export default function UserManagerPage(): React.ReactElement {
                             <TableCell align="right">{user.displayname}</TableCell>
                             <TableCell align="right">{user.uuid}</TableCell>
                             <TableCell align="right">{user.description}</TableCell>
+                            <TableCell align="right">
+                                <IconButton aria-label="edit">
+                                    <EditIcon />
+                                </IconButton>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
