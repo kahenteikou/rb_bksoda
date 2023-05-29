@@ -8,7 +8,7 @@ import { User } from '../types/User';
 
 export default function UserManagerPage(): React.ReactElement {
     const {getAllUsers,users}=useAllUsers();
-    const ModalStyle :{[key:string]:React.CSSProperties}= {
+    const ModalStyle = {
         content:{
             top: "20%",
             left: "50%",
@@ -82,6 +82,7 @@ export default function UserManagerPage(): React.ReactElement {
                             <TableCell align="right">
                                 <IconButton aria-label="edit" onClick={()=>{
                                     console.log("edit: %s",user.uuid );
+                                    openEditmodal(user);
                                 }}>
                                     <EditIcon />
                                 </IconButton>
@@ -91,9 +92,9 @@ export default function UserManagerPage(): React.ReactElement {
                 </TableBody>
             </Table>
         </TableContainer>
-        <Modal isOpen={editModalIsOpen} onClose={closeModal} >
+        <Modal isOpen={editModalIsOpen} onRequestClose={closeModal} style={ModalStyle} >
             <Box mb={2}>
-                
+                dialog dialog
             </Box>
         </Modal>
         </>
