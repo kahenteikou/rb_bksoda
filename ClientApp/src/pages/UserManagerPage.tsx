@@ -28,6 +28,13 @@ export default function UserManagerPage(): React.ReactElement {
     useEffect(()=>{
         getAllUsers();
     },[]);
+    function post_edited_value_and_refresh(){
+        console.log("after log:",selectedUser);
+        closeModal();
+    }
+    const closeModal=()=>{
+        seteditModalIsOpen(false);
+    }
     return (
         <>
         <h1>UserManagerPage</h1><br/>
