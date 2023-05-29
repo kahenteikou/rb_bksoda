@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -18,6 +18,7 @@ export default function UserManagerPage(): React.ReactElement {
             maxWidth: "50%",
         },
     }
+    const [editModalIsOpen,seteditModalIsOpen]=useState(false);
     useEffect(()=>{
         getAllUsers();
     },[]);
