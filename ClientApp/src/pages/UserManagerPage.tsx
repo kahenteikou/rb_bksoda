@@ -53,7 +53,9 @@ export default function UserManagerPage(): React.ReactElement {
                             <TableCell align="right">{user.uuid}</TableCell>
                             <TableCell align="right">{user.description}</TableCell>
                             <TableCell align="right">
-                                <IconButton aria-label="edit">
+                                <IconButton aria-label="edit" onClick={()=>{
+                                    console.log("edit: %s",user.uuid );
+                                }}>
                                     <EditIcon />
                                 </IconButton>
                             </TableCell>
