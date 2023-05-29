@@ -24,6 +24,7 @@ export default function UserManagerPage(): React.ReactElement {
     const [selectedUser,setselectedUser]=useState<User>();
     const openEditmodal=(user:User)=>{
         setselectedUser(user);
+        Modal.setAppElement('#app') 
         seteditModalIsOpen(true);
     };
     useEffect(()=>{
@@ -38,6 +39,7 @@ export default function UserManagerPage(): React.ReactElement {
     }
     return (
         <>
+        <div id='app'>
         <h1>UserManagerPage</h1><br/>
         {/*
         <ul>
@@ -97,6 +99,7 @@ export default function UserManagerPage(): React.ReactElement {
                 dialog dialog
             </Box>
         </Modal>
+        </div>
         </>
     );
 }
