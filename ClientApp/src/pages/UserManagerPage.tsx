@@ -3,6 +3,7 @@ import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect, useState } from 'react';
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { User } from '../types/User';
 
 export default function UserManagerPage(): React.ReactElement {
     const {getAllUsers,users}=useAllUsers();
@@ -19,6 +20,7 @@ export default function UserManagerPage(): React.ReactElement {
         },
     }
     const [editModalIsOpen,seteditModalIsOpen]=useState(false);
+    const [selectedUser,setselectedUser]=useState<User>();
     useEffect(()=>{
         getAllUsers();
     },[]);
