@@ -6,6 +6,18 @@ import EditIcon from '@mui/icons-material/Edit';
 
 export default function UserManagerPage(): React.ReactElement {
     const {getAllUsers,users}=useAllUsers();
+    const ModalStyle = {
+        content: {
+            top: "20%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            minWidth: "50%",
+            maxWidth: "50%",
+        },
+    }
     useEffect(()=>{
         getAllUsers();
     },[]);
