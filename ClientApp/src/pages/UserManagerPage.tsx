@@ -21,6 +21,10 @@ export default function UserManagerPage(): React.ReactElement {
     }
     const [editModalIsOpen,seteditModalIsOpen]=useState(false);
     const [selectedUser,setselectedUser]=useState<User>();
+    const openEditmodal=(user:User)=>{
+        setselectedUser(user);
+        seteditModalIsOpen(true);
+    };
     useEffect(()=>{
         getAllUsers();
     },[]);
