@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect, useState } from 'react';
-import { Box, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Modal from "react-modal";
 import EditIcon from '@mui/icons-material/Edit';
 import { User } from '../types/User';
@@ -41,16 +41,6 @@ export default function UserManagerPage(): React.ReactElement {
         <>
         <div id='app'>
         <h1>UserManagerPage</h1><br/>
-        {/*
-        <ul>
-            {
-                users.map((user)=>
-                <><li>username:{user.username}</li>
-                <br/>
-                <li>uuid:{user.uuid}</li>
-                </>)
-            }
-        </ul>*/}
         <TableContainer component={Paper}>
             <Table sx={{minWidth:650}} aria-label="table">
                 <TableHead>
@@ -95,8 +85,18 @@ export default function UserManagerPage(): React.ReactElement {
             </Table>
         </TableContainer>
         <Modal isOpen={editModalIsOpen} onRequestClose={closeModal} style={ModalStyle} >
-            <Box mb={2}>
-                dialog dialog
+            <Box mb={3}>
+                <h1>ユーザー編集</h1>
+                <Box display="flex" flexDirection="row">
+                    <Box mr={4}>
+                        <FormControl>
+                            <InputLabel id="input_label_username">
+                                ユーザー名
+                            </InputLabel>
+
+                        </FormControl>
+                    </Box>
+                </Box>
             </Box>
         </Modal>
         </div>
