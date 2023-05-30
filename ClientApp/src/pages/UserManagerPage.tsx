@@ -1,30 +1,16 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect, useState } from 'react';
-import { Box, FormControl, IconButton, Input, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import Modal from "react-modal";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { User } from '../types/User';
 
 export default function UserManagerPage(): React.ReactElement {
     const {getAllUsers,users}=useAllUsers();
-    const ModalStyle = {
-        content:{
-            top: "20%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            minWidth: "80%",
-            maxWidth: "80%",
-        },
-    }
     const [editModalIsOpen,seteditModalIsOpen]=useState(false);
     const [selectedUser,setselectedUser]=useState<User>();
     const openEditmodal=(user:User)=>{
         setselectedUser(user);
-        Modal.setAppElement('#app') 
         seteditModalIsOpen(true);
     };
     useEffect(()=>{
@@ -84,20 +70,16 @@ export default function UserManagerPage(): React.ReactElement {
                 </TableBody>
             </Table>
         </TableContainer>
-        <Modal isOpen={editModalIsOpen} onRequestClose={closeModal} style={ModalStyle} >
-            <Box mb={2}>
-                <h1>ユーザー編集</h1>
-                <Box display="flex" flexDirection="row">
-                    <Box mr={2}>
-                        <FormControl>
-                            <InputLabel id="input_label_username">
-                                ユーザー名
-                            </InputLabel>
-                        </FormControl>
-                    </Box>
-                </Box>
-            </Box>
-        </Modal>
+        <Dialog open={editModalIsOpen} onClose={closeModal}>
+            <DialogTitle>ユーザー編集</DialogTitle>
+            <DialogContent>
+                
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={closeModal}>Cancel</Button>
+                <Button onClick={closeModal}>Apply</Button>
+            </DialogActions>
+        </Dialog>
         </div>
         </>
     );
