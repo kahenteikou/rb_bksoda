@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect, useState } from 'react';
-import { Box, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { User } from '../types/User';
 
@@ -70,7 +70,16 @@ export default function UserManagerPage(): React.ReactElement {
                 </TableBody>
             </Table>
         </TableContainer>
-
+        <Dialog open={editModalIsOpen} onClose={closeModal}>
+            <DialogTitle>ユーザー編集</DialogTitle>
+            <DialogContent>
+                
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={closeModal}>Cancel</Button>
+                <Button onClick={closeModal}>Apply</Button>
+            </DialogActions>
+        </Dialog>
         </div>
         </>
     );
