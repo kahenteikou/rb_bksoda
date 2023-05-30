@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect, useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { User } from '../types/User';
 
@@ -73,7 +73,14 @@ export default function UserManagerPage(): React.ReactElement {
         <Dialog open={editModalIsOpen} onClose={closeModal}>
             <DialogTitle>ユーザー編集</DialogTitle>
             <DialogContent>
-                
+                <DialogContentText>
+                    ユーザー編集機能です。あああああああああああああああああああああああああああああああああああああああああ
+                </DialogContentText>
+                <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={selectedUser?.username}
+                onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
+                    setselectedUser({...selectedUser,username:e.target.value})
+                }} />
+
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeModal}>Cancel</Button>
