@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect, useState } from 'react';
-import { Box, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, FormControl, IconButton, Input, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Modal from "react-modal";
 import EditIcon from '@mui/icons-material/Edit';
 import { User } from '../types/User';
@@ -16,8 +16,8 @@ export default function UserManagerPage(): React.ReactElement {
             bottom: "auto",
             marginRight: "-50%",
             transform: "translate(-50%, -50%)",
-            minWidth: "50%",
-            maxWidth: "50%",
+            minWidth: "80%",
+            maxWidth: "80%",
         },
     }
     const [editModalIsOpen,seteditModalIsOpen]=useState(false);
@@ -85,15 +85,14 @@ export default function UserManagerPage(): React.ReactElement {
             </Table>
         </TableContainer>
         <Modal isOpen={editModalIsOpen} onRequestClose={closeModal} style={ModalStyle} >
-            <Box mb={3}>
+            <Box mb={2}>
                 <h1>ユーザー編集</h1>
                 <Box display="flex" flexDirection="row">
-                    <Box mr={4}>
+                    <Box mr={2}>
                         <FormControl>
                             <InputLabel id="input_label_username">
                                 ユーザー名
                             </InputLabel>
-
                         </FormControl>
                     </Box>
                 </Box>
