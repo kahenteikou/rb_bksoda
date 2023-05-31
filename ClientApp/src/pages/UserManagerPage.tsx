@@ -82,13 +82,13 @@ export default function UserManagerPage(): React.ReactElement {
                 onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
                     setselectedUser({...selectedUser,username:e.target.value})
                 }} />
-                <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={selectedUser?.username}
+                <TextField margin="dense" label="表示名" fullWidth variant='standard' value={selectedUser?.displayname}
                 onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
-                    setselectedUser({...selectedUser,username:e.target.value})
+                    setselectedUser({...selectedUser,displayname:e.target.value})
                 }} />
-                <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={selectedUser?.username}
+                <TextField margin="dense" label="説明" fullWidth variant='standard' value={selectedUser?.description}
                 onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
-                    setselectedUser({...selectedUser,username:e.target.value})
+                    setselectedUser({...selectedUser,description:e.target.value})
                 }} />
 
             </DialogContent>
