@@ -24,6 +24,21 @@ export default function UserManagerPage(): React.ReactElement {
             description:selectedUser?.description,
             displayname:selectedUser?.displayname
         }
+        console.log("after log:",request_user);
+        fetch(
+            "http://localhost:8080/api/v1/users/"+selectedUser?.uuid,
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(request_user)
+            }
+        ).then((rp)=>{
+            getAllUsers();
+        },(err)=>{
+            console.error(err)
+        });
         closeModal();
     }
     const closeModal=()=>{
