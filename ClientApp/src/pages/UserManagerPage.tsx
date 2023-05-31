@@ -80,6 +80,14 @@ export default function UserManagerPage(): React.ReactElement {
                 onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
                     setselectedUser({...selectedUser,username:e.target.value})
                 }} />
+                <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={selectedUser?.username}
+                onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
+                    setselectedUser({...selectedUser,username:e.target.value})
+                }} />
+                <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={selectedUser?.username}
+                onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
+                    setselectedUser({...selectedUser,username:e.target.value})
+                }} />
 
             </DialogContent>
             <DialogActions>
