@@ -75,6 +75,8 @@ export default function UserManagerPage(): React.ReactElement {
             <DialogContent>
                 <DialogContentText>
                     ユーザー編集機能です。あああああああああああああああああああああああああああああああああああああああああ
+                    <br/>
+                    {selectedUser?.uuid}
                 </DialogContentText>
                 <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={selectedUser?.username}
                 onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
