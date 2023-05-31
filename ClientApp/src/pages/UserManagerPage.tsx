@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { User } from '../types/User';
+import { User_Req } from '../types/User_Req';
 
 export default function UserManagerPage(): React.ReactElement {
     const {getAllUsers,users}=useAllUsers();
@@ -17,7 +18,12 @@ export default function UserManagerPage(): React.ReactElement {
         getAllUsers();
     },[]);
     function post_edited_value_and_refresh(){
-        console.log("after log:",selectedUser);
+        //console.log("after log:",selectedUser);
+        let request_user:User_Req={
+            username:selectedUser?.username,
+            description:selectedUser?.description,
+            displayname:selectedUser?.displayname
+        }
         closeModal();
     }
     const closeModal=()=>{
@@ -94,7 +100,7 @@ export default function UserManagerPage(): React.ReactElement {
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeModal}>Cancel</Button>
-                <Button onClick={closeModal}>Apply</Button>
+                <Button onClick={post_edited_value_and_refresh}>Apply</Button>
             </DialogActions>
         </Dialog>
         </div>
