@@ -44,6 +44,9 @@ export default function UserManagerPage(): React.ReactElement {
     const closeModal=()=>{
         seteditModalIsOpen(false);
     }
+    function delete_clicked(){
+        closeModal();
+    }
     return (
         <>
         <div id='app'>
