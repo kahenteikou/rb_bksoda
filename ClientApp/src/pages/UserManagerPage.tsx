@@ -3,16 +3,22 @@ import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect, useState } from 'react';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { User } from '../types/User';
 import { User_Req } from '../types/User_Req';
 
 export default function UserManagerPage(): React.ReactElement {
     const {getAllUsers,users}=useAllUsers();
     const [editModalIsOpen,seteditModalIsOpen]=useState(false);
+    const [deleteModalIsOpen,setdeleteModalIsOpen]=useState(false);
     const [selectedUser,setselectedUser]=useState<User>();
     const openEditmodal=(user:User)=>{
         setselectedUser(user);
         seteditModalIsOpen(true);
+    };
+    const openDeletemodal=(user:User)=>{
+        setselectedUser(user);
+        setdeleteModalIsOpen(true);
     };
     useEffect(()=>{
         getAllUsers();
@@ -44,8 +50,8 @@ export default function UserManagerPage(): React.ReactElement {
     const closeModal=()=>{
         seteditModalIsOpen(false);
     }
-    function delete_clicked(){
-        closeModal();
+    const close_deletemodal=()=>{
+        setdeleteModalIsOpen(false);
     }
     return (
         <>
@@ -70,6 +76,9 @@ export default function UserManagerPage(): React.ReactElement {
                         <TableCell align="right">
                             Edit
                         </TableCell>
+                        <TableCell align="right">
+                            Delete
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -87,6 +96,15 @@ export default function UserManagerPage(): React.ReactElement {
                                     openEditmodal(user);
                                 }}>
                                     <EditIcon />
+                                </IconButton>
+                            </TableCell>
+                            <TableCell align="right">
+                                <IconButton aria-label="delete" onClick={()=>{
+                                    console.log("delete: %s",user.uuid );
+                                    //openEditmodal(user);
+                                    openDeletemodal(user);
+                                }}>
+                                    <DeleteIcon />
                                 </IconButton>
                             </TableCell>
                         </TableRow>
@@ -120,6 +138,34 @@ export default function UserManagerPage(): React.ReactElement {
                 <Button onClick={closeModal}>Cancel</Button>
                 <Button onClick={post_edited_value_and_refresh}>Apply</Button>
             </DialogActions>
+        </Dialog>
+        <Dialog open={deleteModalIsOpen} onClose={close_deletemodal}>
+                <DialogTitle>
+                    ユーザーを削除しますか？
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {selectedUser?.username},{selectedUser?.uuid}を削除しますか?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={close_deletemodal}>Cancel</Button>
+                    <Button onClick={()=>{
+                        fetch(
+                            "http://localhost:8080/api/v1/users/"+selectedUser?.uuid,
+                            {
+                                method:"DELETE"
+                            }
+                        ).then((rp)=>{
+                            getAllUsers();
+                        },(err)=>{
+                            console.error(err)
+                        });
+                        close_deletemodal();
+                    }}>
+                        Delete
+                    </Button>
+                </DialogActions>
         </Dialog>
         </div>
         </>
