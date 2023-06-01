@@ -1,173 +1,182 @@
 import * as React from 'react';
 import { useAllUsers } from '../hooks/useAllUsers';
 import { useEffect, useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { User } from '../types/User';
+import AddIcon from '@mui/icons-material/Add';
 import { User_Req } from '../types/User_Req';
 
 export default function UserManagerPage(): React.ReactElement {
-    const {getAllUsers,users}=useAllUsers();
-    const [editModalIsOpen,seteditModalIsOpen]=useState(false);
-    const [deleteModalIsOpen,setdeleteModalIsOpen]=useState(false);
-    const [selectedUser,setselectedUser]=useState<User>();
-    const openEditmodal=(user:User)=>{
+    const { getAllUsers, users } = useAllUsers();
+    const [editModalIsOpen, seteditModalIsOpen] = useState(false);
+    const [deleteModalIsOpen, setdeleteModalIsOpen] = useState(false);
+    const [selectedUser, setselectedUser] = useState<User>();
+    const openEditmodal = (user: User) => {
         setselectedUser(user);
         seteditModalIsOpen(true);
     };
-    const openDeletemodal=(user:User)=>{
+    const openDeletemodal = (user: User) => {
         setselectedUser(user);
         setdeleteModalIsOpen(true);
     };
-    useEffect(()=>{
+    useEffect(() => {
         getAllUsers();
-    },[]);
-    function post_edited_value_and_refresh(){
+    }, []);
+    function post_edited_value_and_refresh() {
         //console.log("after log:",selectedUser);
-        let request_user:User_Req={
-            username:selectedUser?.username,
-            description:selectedUser?.description,
-            displayname:selectedUser?.displayname
+        let request_user: User_Req = {
+            username: selectedUser?.username,
+            description: selectedUser?.description,
+            displayname: selectedUser?.displayname
         }
-        console.log("after log:",request_user);
+        console.log("after log:", request_user);
         fetch(
-            "http://localhost:8080/api/v1/users/"+selectedUser?.uuid,
+            "http://localhost:8080/api/v1/users/" + selectedUser?.uuid,
             {
-                method:"PUT",
-                headers:{
-                    "Content-Type":"application/json"
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                body:JSON.stringify(request_user)
+                body: JSON.stringify(request_user)
             }
-        ).then((rp)=>{
+        ).then((rp) => {
             getAllUsers();
-        },(err)=>{
+        }, (err) => {
             console.error(err)
         });
         closeModal();
     }
-    const closeModal=()=>{
+    const closeModal = () => {
         seteditModalIsOpen(false);
     }
-    const close_deletemodal=()=>{
+    const close_deletemodal = () => {
         setdeleteModalIsOpen(false);
     }
     return (
         <>
-        <div id='app'>
-        <h1>UserManagerPage</h1><br/>
-        <TableContainer component={Paper}>
-            <Table sx={{minWidth:650}} aria-label="table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>
-                            Name
-                        </TableCell>
-                        <TableCell align="right">
-                            displayname
-                        </TableCell>
-                        <TableCell align="right">
-                            UUID
-                        </TableCell>
-                        <TableCell align="right">
-                            description
-                        </TableCell>
-                        <TableCell align="right">
-                            Edit
-                        </TableCell>
-                        <TableCell align="right">
-                            Delete
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {users.map((user)=>(
-                        <TableRow key={user.uuid}>
-                            <TableCell component="th" scope="row">
-                                {user.username}
-                            </TableCell>
-                            <TableCell align="right">{user.displayname}</TableCell>
-                            <TableCell align="right">{user.uuid}</TableCell>
-                            <TableCell align="right">{user.description}</TableCell>
-                            <TableCell align="right">
-                                <IconButton aria-label="edit" onClick={()=>{
-                                    console.log("edit: %s",user.uuid );
-                                    openEditmodal(user);
-                                }}>
-                                    <EditIcon />
-                                </IconButton>
-                            </TableCell>
-                            <TableCell align="right">
-                                <IconButton aria-label="delete" onClick={()=>{
-                                    console.log("delete: %s",user.uuid );
-                                    //openEditmodal(user);
-                                    openDeletemodal(user);
-                                }}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-        <Dialog open={editModalIsOpen} onClose={closeModal}>
-            <DialogTitle>ユーザー編集</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                    ユーザー編集機能です。あああああああああああああああああああああああああああああああああああああああああ
-                    <br/>
-                    {selectedUser?.uuid}
-                </DialogContentText>
-                <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={selectedUser?.username}
-                onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
-                    setselectedUser({...selectedUser,username:e.target.value})
-                }} />
-                <TextField margin="dense" label="表示名" fullWidth variant='standard' value={selectedUser?.displayname}
-                onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
-                    setselectedUser({...selectedUser,displayname:e.target.value})
-                }} />
-                <TextField margin="dense" label="説明" fullWidth variant='standard' value={selectedUser?.description}
-                onChange={(e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
-                    setselectedUser({...selectedUser,description:e.target.value})
-                }} />
+            <div id='app'>
+                <h1>UserManagerPage</h1><br />
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    Name
+                                </TableCell>
+                                <TableCell align="right">
+                                    displayname
+                                </TableCell>
+                                <TableCell align="right">
+                                    UUID
+                                </TableCell>
+                                <TableCell align="right">
+                                    description
+                                </TableCell>
+                                <TableCell align="right">
+                                    Edit
+                                </TableCell>
+                                <TableCell align="right">
+                                    Delete
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {users.map((user) => (
+                                <TableRow key={user.uuid}>
+                                    <TableCell component="th" scope="row">
+                                        {user.username}
+                                    </TableCell>
+                                    <TableCell align="right">{user.displayname}</TableCell>
+                                    <TableCell align="right">{user.uuid}</TableCell>
+                                    <TableCell align="right">{user.description}</TableCell>
+                                    <TableCell align="right">
+                                        <IconButton aria-label="edit" onClick={() => {
+                                            console.log("edit: %s", user.uuid);
+                                            openEditmodal(user);
+                                        }}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <IconButton aria-label="delete" onClick={() => {
+                                            console.log("delete: %s", user.uuid);
+                                            //openEditmodal(user);
+                                            openDeletemodal(user);
+                                        }}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <Dialog open={editModalIsOpen} onClose={closeModal}>
+                    <DialogTitle>ユーザー編集</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            ユーザー編集機能です。あああああああああああああああああああああああああああああああああああああああああ
+                            <br />
+                            {selectedUser?.uuid}
+                        </DialogContentText>
+                        <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={selectedUser?.username}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                setselectedUser({ ...selectedUser, username: e.target.value })
+                            }} />
+                        <TextField margin="dense" label="表示名" fullWidth variant='standard' value={selectedUser?.displayname}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                setselectedUser({ ...selectedUser, displayname: e.target.value })
+                            }} />
+                        <TextField margin="dense" label="説明" fullWidth variant='standard' value={selectedUser?.description}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                setselectedUser({ ...selectedUser, description: e.target.value })
+                            }} />
 
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={closeModal}>Cancel</Button>
-                <Button onClick={post_edited_value_and_refresh}>Apply</Button>
-            </DialogActions>
-        </Dialog>
-        <Dialog open={deleteModalIsOpen} onClose={close_deletemodal}>
-                <DialogTitle>
-                    ユーザーを削除しますか？
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        {selectedUser?.username},{selectedUser?.uuid}を削除しますか?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={close_deletemodal}>Cancel</Button>
-                    <Button onClick={()=>{
-                        fetch(
-                            "http://localhost:8080/api/v1/users/"+selectedUser?.uuid,
-                            {
-                                method:"DELETE"
-                            }
-                        ).then((rp)=>{
-                            getAllUsers();
-                        },(err)=>{
-                            console.error(err)
-                        });
-                        close_deletemodal();
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeModal}>Cancel</Button>
+                        <Button onClick={post_edited_value_and_refresh}>Apply</Button>
+                    </DialogActions>
+                </Dialog>
+                <Dialog open={deleteModalIsOpen} onClose={close_deletemodal}>
+                    <DialogTitle>
+                        ユーザーを削除しますか？
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            {selectedUser?.username},{selectedUser?.uuid}を削除しますか?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button autoFocus onClick={close_deletemodal}>Cancel</Button>
+                        <Button onClick={() => {
+                            fetch(
+                                "http://localhost:8080/api/v1/users/" + selectedUser?.uuid,
+                                {
+                                    method: "DELETE"
+                                }
+                            ).then((rp) => {
+                                getAllUsers();
+                            }, (err) => {
+                                console.error(err)
+                            });
+                            close_deletemodal();
+                        }}>
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                <br/><br/>
+                <center>
+                    <Fab color="primary" aria-label="add" onClick={()=>{
+                        console.log("clicked add button");
                     }}>
-                        Delete
-                    </Button>
-                </DialogActions>
-        </Dialog>
-        </div>
+                        <AddIcon />
+                    </Fab>
+                </center>
+            </div>
         </>
     );
 }
