@@ -25,9 +25,9 @@ export default function UserManagerPage(): React.ReactElement {
     };
     const openAddmodal=()=>{
         set_addUser_cache({
-            username:"",
-            displayname:"",
-            description:""
+            username:"uname",
+            displayname:"dname",
+            description:"desc"
         });
         setaddModalIsOpen(true);
     };
@@ -176,7 +176,25 @@ export default function UserManagerPage(): React.ReactElement {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={close_add_modal}>Cancel</Button>
-                        {/*<Button onClick={post_edited_value_and_refresh}>Apply</Button>*/}
+                        <Button onClick={()=>{
+                            console.log(addUser_cache);
+                            fetch(
+                                "http://localhost:8080/api/v1/users/",
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify(addUser_cache)
+                                }
+                            ).then((rp) => {
+                                getAllUsers();
+                            }, (err) => {
+                                console.error(err)
+                            });
+                            close_add_modal();
+                            
+                        }}>Apply</Button>
                     </DialogActions>
                 </Dialog>
                 <Dialog open={deleteModalIsOpen} onClose={close_deletemodal}>
