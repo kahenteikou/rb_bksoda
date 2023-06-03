@@ -11,6 +11,7 @@ import { User_Req } from '../types/User_Req';
 export default function UserManagerPage(): React.ReactElement {
     const { getAllUsers, users } = useAllUsers();
     const [editModalIsOpen, seteditModalIsOpen] = useState(false);
+    const [addModalIsOpen, setaddModalIsOpen] = useState(false);
     const [deleteModalIsOpen, setdeleteModalIsOpen] = useState(false);
     const [selectedUser, setselectedUser] = useState<User>();
     const openEditmodal = (user: User) => {
@@ -171,7 +172,8 @@ export default function UserManagerPage(): React.ReactElement {
                 <br/><br/>
                 <center>
                     <Fab color="primary" aria-label="add" onClick={()=>{
-                        console.log("clicked add button");
+                        //console.log("clicked add button");
+
                     }}>
                         <AddIcon />
                     </Fab>
