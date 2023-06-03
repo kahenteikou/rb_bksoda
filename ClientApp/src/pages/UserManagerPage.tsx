@@ -153,6 +153,32 @@ export default function UserManagerPage(): React.ReactElement {
                         <Button onClick={post_edited_value_and_refresh}>Apply</Button>
                     </DialogActions>
                 </Dialog>
+                <Dialog open={addModalIsOpen} onClose={close_add_modal}>
+                    <DialogTitle>ユーザー追加</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            ユーザー追加あああああああああああああああああああああああああああああ
+                            <br />
+                        </DialogContentText>
+                        <TextField margin="dense" label="ユーザー名" fullWidth variant='standard' value={addUser_cache?.username}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                set_addUser_cache({ ...addUser_cache, username: e.target.value })
+                            }} />
+                        <TextField margin="dense" label="表示名" fullWidth variant='standard' value={addUser_cache?.displayname}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                set_addUser_cache({ ...addUser_cache, displayname: e.target.value })
+                            }} />
+                        <TextField margin="dense" label="説明" fullWidth variant='standard' value={addUser_cache?.description}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                set_addUser_cache({ ...addUser_cache, description: e.target.value })
+                            }} />
+
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={close_add_modal}>Cancel</Button>
+                        {/*<Button onClick={post_edited_value_and_refresh}>Apply</Button>*/}
+                    </DialogActions>
+                </Dialog>
                 <Dialog open={deleteModalIsOpen} onClose={close_deletemodal}>
                     <DialogTitle>
                         ユーザーを削除しますか？
@@ -185,7 +211,7 @@ export default function UserManagerPage(): React.ReactElement {
                 <center>
                     <Fab color="primary" aria-label="add" onClick={()=>{
                         //console.log("clicked add button");
-
+                        openAddmodal();
                     }}>
                         <AddIcon />
                     </Fab>
