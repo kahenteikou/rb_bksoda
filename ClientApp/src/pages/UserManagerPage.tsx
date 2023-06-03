@@ -14,6 +14,7 @@ export default function UserManagerPage(): React.ReactElement {
     const [addModalIsOpen, setaddModalIsOpen] = useState(false);
     const [deleteModalIsOpen, setdeleteModalIsOpen] = useState(false);
     const [selectedUser, setselectedUser] = useState<User>();
+    const [addUser_cache, set_addUser_cache] = useState<User_Req>();
     const openEditmodal = (user: User) => {
         setselectedUser(user);
         seteditModalIsOpen(true);
@@ -21,6 +22,14 @@ export default function UserManagerPage(): React.ReactElement {
     const openDeletemodal = (user: User) => {
         setselectedUser(user);
         setdeleteModalIsOpen(true);
+    };
+    const openAddmodal=()=>{
+        set_addUser_cache({
+            username:"",
+            displayname:"",
+            description:""
+        });
+        setaddModalIsOpen(true);
     };
     useEffect(() => {
         getAllUsers();
@@ -54,6 +63,9 @@ export default function UserManagerPage(): React.ReactElement {
     }
     const close_deletemodal = () => {
         setdeleteModalIsOpen(false);
+    }
+    const close_add_modal=()=>{
+        setaddModalIsOpen(false);
     }
     return (
         <>
