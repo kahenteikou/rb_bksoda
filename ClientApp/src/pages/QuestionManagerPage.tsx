@@ -40,6 +40,7 @@ export default function QuestionManagerPage(): React.ReactElement {
     const { getAllQuestions, questions } = useAllQuestions();
     const [editModalIsOpen, seteditModalIsOpen] = useState(false);
     const [selectedQuestion, setSelectedQuestion] = useState<Question>();
+    const [deleteModalIsOpen, setdeleteModalIsOpen] = useState(false);
     const [selected_AddQuestion, setSelected_AddQuestion] = useState<Question>({
         question_name: "",
         content: "",
@@ -64,6 +65,13 @@ export default function QuestionManagerPage(): React.ReactElement {
         setSelectedQuestion(question);
         seteditModalIsOpen(true);
     };
+    const openDeletemodal = (question: Question) => {
+        setSelectedQuestion(question);
+        setdeleteModalIsOpen(true);
+    };
+    const close_deletemodal = () => {
+        setdeleteModalIsOpen(false);
+    }
     function tab_apply_Prop(index: number) {
         return {
             id: `question-add-tab-${index}`,
@@ -208,7 +216,7 @@ export default function QuestionManagerPage(): React.ReactElement {
                                             <IconButton aria-label="delete" onClick={() => {
                                                 console.log("delete: %s", question.uuid);
                                                 //openEditmodal(user);
-                                                //openDeletemodal(user);
+                                                openDeletemodal(question);
                                             }}>
                                                 <DeleteIcon />
                                             </IconButton>
@@ -245,6 +253,35 @@ export default function QuestionManagerPage(): React.ReactElement {
                             <Button onClick={post_edited_value_and_refresh}>Apply</Button>
                         </DialogActions>
                     </Dialog>
+                    
+                <Dialog open={deleteModalIsOpen} onClose={close_deletemodal}>
+                    <DialogTitle>
+                        ユーザーを削除しますか？
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            {selectedQuestion?.question_name},{selectedQuestion?.uuid}を削除しますか?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button autoFocus onClick={close_deletemodal}>Cancel</Button>
+                        <Button onClick={() => {
+                            fetch(
+                                "http://localhost:8080/api/v1/question_db/question/" + selectedQuestion?.uuid,
+                                {
+                                    method: "DELETE"
+                                }
+                            ).then((rp) => {
+                                getAllQuestions();
+                            }, (err) => {
+                                console.error(err)
+                            });
+                            close_deletemodal();
+                        }}>
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
                 </Box>
             </ThemeProvider>
         </>
