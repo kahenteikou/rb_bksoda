@@ -5,9 +5,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useAllQuestions } from '../hooks/useAllQuestions';
+import { Question } from '../types/Question';
 
 export default function QuestionManagerPage(): React.ReactElement {
     const {getAllQuestions,questions}=useAllQuestions();
+    const [editModalIsOpen, seteditModalIsOpen] = useState(false);
+    const [selectedQuestion,setSelectedQuestion]=useState<Question>();
     useEffect(()=>{
         getAllQuestions();
     },[]);
