@@ -51,9 +51,10 @@ export default function QuestionManagerPage(): React.ReactElement {
         setTabIndex(newValue);
     };
     const theme = createTheme({
+        /*
         palette: {
             mode: 'dark'
-        }
+        }*/
     });
     useEffect(() => {
         getAllQuestions();
