@@ -69,6 +69,8 @@ export default function QuestionManagerPage(): React.ReactElement {
                     </Tabs>
                 </Box>
             </Box>
+            <Box sx={{width:'100%'}}>
+                <h2>list</h2>
             <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="table">
                         <TableHead>
@@ -151,6 +153,7 @@ export default function QuestionManagerPage(): React.ReactElement {
                         <Button onClick={post_edited_value_and_refresh}>Apply</Button>
                     </DialogActions>
                 </Dialog>
+                </Box>
         </>
     );
 }
