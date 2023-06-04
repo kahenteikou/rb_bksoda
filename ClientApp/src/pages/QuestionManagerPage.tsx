@@ -126,7 +126,34 @@ export default function QuestionManagerPage(): React.ReactElement {
                                 }}/>
                             </Item>
                             <Item>
-                                <Button>追加</Button>
+                                <Button onClick={()=>{
+                                    console.log("submit");
+                                    if(selected_AddQuestion?.question_name===""||selected_AddQuestion?.content===""||selected_AddQuestion?.answer===""){
+                                        alert("空白の項目があります。");
+                                        return;
+                                    }
+                                    let request_question: Question_Req = {
+                                        question_name: selected_AddQuestion?.question_name,
+                                        answer: selected_AddQuestion?.answer,
+                                        content: selected_AddQuestion?.content
+                                    }
+
+                                    console.log("after log:", request_question);
+                                    fetch(
+                                        "http://localhost:8080/api/v1/question_db/question/",
+                                        {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify(request_question)
+                                        }
+                                    ).then((rp) => {
+                                        getAllQuestions();
+                                    }, (err) => {
+                                        console.error(err)
+                                    });
+                                }}>追加</Button>
                             </Item>
                         </Box>
                     </TabPanel>
