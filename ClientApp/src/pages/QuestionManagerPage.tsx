@@ -112,8 +112,14 @@ export default function QuestionManagerPage(): React.ReactElement {
                         Normal Input
                         <Box sx={{ width: '100%' }}>
                             <Item>
-                                <TextField margin="dense" label="問題名" fullWidth variant='standard' />
-                                <TextField margin="dense" label="問い" fullWidth variant='standard' />
+                                <TextField margin="dense" label="問題名" fullWidth variant='standard' value={selected_AddQuestion?.question_name} 
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                    setSelected_AddQuestion({ ...selected_AddQuestion, question_name: e.target.value })
+                                }}/>
+                                <TextField margin="dense" label="問い" fullWidth variant='standard' value={selected_AddQuestion?.content}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                    setSelected_AddQuestion({ ...selected_AddQuestion, content: e.target.value })
+                                }}/>
                                 <TextField margin="dense" label="答え" fullWidth variant='standard'  value={selected_AddQuestion?.answer}
                                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
                                     setSelected_AddQuestion({ ...selected_AddQuestion, answer: e.target.value })
