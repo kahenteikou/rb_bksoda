@@ -26,6 +26,12 @@ export default function QuestionManagerPage(): React.ReactElement {
         setSelectedQuestion(question);
         seteditModalIsOpen(true);
     };
+    function tab_apply_Prop(index:number){
+        return{
+            id:`question-add-tab-${index}`,
+            'aria-controls':`question-add-tabpanel-${index}`,
+        };
+    }
     function post_edited_value_and_refresh() {
         //console.log("after log:",selectedUser);
         let request_question: Question_Req = {
@@ -58,7 +64,8 @@ export default function QuestionManagerPage(): React.ReactElement {
             <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={tabIndex} onChange={tab_HandleChange} aria-label='tab'>
-
+                        <Tab label="通常入力" {...tab_apply_Prop(0)}/>
+                        <Tab label="JSON入力" {...tab_apply_Prop(1)}/>
                     </Tabs>
                 </Box>
             </Box>
