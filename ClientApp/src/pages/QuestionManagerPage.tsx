@@ -88,6 +88,12 @@ export default function QuestionManagerPage(): React.ReactElement {
                         <Tab label="JSON入力" {...tab_apply_Prop(1)}/>
                     </Tabs>
                 </Box>
+                <TabPanel value={tabIndex} index={0}>
+                    Normal Input
+                </TabPanel>
+                <TabPanel value={tabIndex} index={1}>
+                    JSON Input
+                </TabPanel>
             </Box>
             <Box sx={{width:'100%'}}>
                 <h2>list</h2>
