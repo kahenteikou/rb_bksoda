@@ -16,7 +16,11 @@ export default function QuestionManagerPage(): React.ReactElement {
     },[]);
     const closeEditModal = () => {
         seteditModalIsOpen(false);
-    }
+    };
+    const openEditModal=(question:Question)=>{
+        setSelectedQuestion(question);
+        seteditModalIsOpen(true);
+    };
     return (
         <>
             <h1>
@@ -59,7 +63,7 @@ export default function QuestionManagerPage(): React.ReactElement {
                                     <TableCell align="right">
                                         <IconButton aria-label="edit" onClick={() => {
                                             console.log("edit: %s", question.uuid);
-                                            //openEditmodal(user);
+                                            openEditModal(question);
                                         }}>
                                             <EditIcon />
                                         </IconButton>
