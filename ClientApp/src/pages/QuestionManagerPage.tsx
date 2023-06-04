@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField ,Tabs,Tab} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -12,6 +12,10 @@ export default function QuestionManagerPage(): React.ReactElement {
     const {getAllQuestions,questions}=useAllQuestions();
     const [editModalIsOpen, seteditModalIsOpen] = useState(false);
     const [selectedQuestion,setSelectedQuestion]=useState<Question>();
+    const [tabIndex,setTabIndex]=useState(0);
+    const tab_HandleChange=(event: React.SyntheticEvent, newValue: number)=>{
+        setTabIndex(newValue);
+    };
     useEffect(()=>{
         getAllQuestions();
     },[]);
@@ -51,7 +55,13 @@ export default function QuestionManagerPage(): React.ReactElement {
             <h1>
                 Question Manager
             </h1>
-            
+            <Box sx={{ width: '100%' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs value={tabIndex} onChange={tab_HandleChange} aria-label='tab'>
+
+                    </Tabs>
+                </Box>
+            </Box>
             <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="table">
                         <TableHead>
