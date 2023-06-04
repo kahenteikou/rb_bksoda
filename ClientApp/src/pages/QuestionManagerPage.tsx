@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useAllQuestions } from '../hooks/useAllQuestions';
 import { Question } from '../types/Question';
+import { Question_Req } from '../types/Question_Req';
 
 export default function QuestionManagerPage(): React.ReactElement {
     const {getAllQuestions,questions}=useAllQuestions();
@@ -21,6 +22,30 @@ export default function QuestionManagerPage(): React.ReactElement {
         setSelectedQuestion(question);
         seteditModalIsOpen(true);
     };
+    function post_edited_value_and_refresh() {
+        //console.log("after log:",selectedUser);
+        let request_question: Question_Req = {
+            question_name: selectedQuestion?.question_name,
+            content: selectedQuestion?.content,
+            answer: selectedQuestion?.answer
+        };
+        console.log("after log:", request_question);
+        fetch(
+            "http://localhost:8080/api/v1/question_db/question/" + selectedQuestion?.uuid,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(request_question)
+            }
+        ).then((rp) => {
+            getAllQuestions();
+        }, (err) => {
+            console.error(err)
+        });
+        closeEditModal();
+    }
     return (
         <>
             <h1>
@@ -106,7 +131,7 @@ export default function QuestionManagerPage(): React.ReactElement {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={closeEditModal}>Cancel</Button>
-                        <Button onClick={closeEditModal}>Apply</Button>
+                        <Button onClick={post_edited_value_and_refresh}>Apply</Button>
                     </DialogActions>
                 </Dialog>
         </>
