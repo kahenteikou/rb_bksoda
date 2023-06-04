@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField ,Tabs,Tab} from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tabs, Tab, Stack, CssBaseline } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -8,48 +8,66 @@ import { useAllQuestions } from '../hooks/useAllQuestions';
 import { Question } from '../types/Question';
 import { Question_Req } from '../types/Question_Req';
 
-export default function QuestionManagerPage(): React.ReactElement {
-    const {getAllQuestions,questions}=useAllQuestions();
-    const [editModalIsOpen, seteditModalIsOpen] = useState(false);
-    const [selectedQuestion,setSelectedQuestion]=useState<Question>();
-    const [tabIndex,setTabIndex]=useState(0);
-    const tab_HandleChange=(event: React.SyntheticEvent, newValue: number)=>{
-        setTabIndex(newValue);
-    };
-    interface TabPanelProps{
-        children?:React.ReactNode;
-        index:number;
-        value:number;
-    }
-    function TabPanel(props:TabPanelProps){
-        const {children,value,index,...other}=props;
-        return(
-            <div role="tabpanel" hidden={value!==index}
+import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: number;
+    value: number;
+}
+const TabPanel=(props: TabPanelProps)=> {
+    const { children, value, index, ...other } = props;
+    return (
+        <div role="tabpanel" hidden={value !== index}
             id={`question-add-tabpanel-${index}`}
             aria-labelledby={`question-add-tab-${index}`}
             {...other}>
-                {value===index&&(
-                    <Box sx={{p:3}}>
-                        {children}
-                    </Box>
-                )}
-            </div>
-        );
-    }
-    useEffect(()=>{
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    {children}
+                </Box>
+            )}
+        </div>
+    );
+}
+export default function QuestionManagerPage(): React.ReactElement {
+    const { getAllQuestions, questions } = useAllQuestions();
+    const [editModalIsOpen, seteditModalIsOpen] = useState(false);
+    const [selectedQuestion, setSelectedQuestion] = useState<Question>();
+    const [selected_AddQuestion, setSelected_AddQuestion] = useState<Question>({
+        question_name: "",
+        content: "",
+        answer: ""
+    });
+    const [tabIndex, setTabIndex] = useState(0);
+    const tab_HandleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setTabIndex(newValue);
+    };
+    const theme = createTheme({
+        palette: {
+            mode: 'dark'
+        }
+    });
+    useEffect(() => {
         getAllQuestions();
-    },[]);
+    }, []);
     const closeEditModal = () => {
         seteditModalIsOpen(false);
     };
-    const openEditModal=(question:Question)=>{
+    const openEditModal = (question: Question) => {
         setSelectedQuestion(question);
         seteditModalIsOpen(true);
     };
-    function tab_apply_Prop(index:number){
-        return{
-            id:`question-add-tab-${index}`,
-            'aria-controls':`question-add-tabpanel-${index}`,
+    function tab_apply_Prop(index: number) {
+        return {
+            id: `question-add-tab-${index}`,
+            'aria-controls': `question-add-tabpanel-${index}`,
         };
     }
     function post_edited_value_and_refresh() {
@@ -78,108 +96,124 @@ export default function QuestionManagerPage(): React.ReactElement {
     }
     return (
         <>
-            <h1>
-                Question Manager
-            </h1>
-            <Box sx={{ width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={tabIndex} onChange={tab_HandleChange} aria-label='tab'>
-                        <Tab label="通常入力" {...tab_apply_Prop(0)}/>
-                        <Tab label="JSON入力" {...tab_apply_Prop(1)}/>
-                    </Tabs>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <h1>
+                    Question Manager
+                </h1>
+                <Box sx={{ width: '100%' }}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <Tabs value={tabIndex} onChange={tab_HandleChange} aria-label='tab'>
+                            <Tab label="通常入力" {...tab_apply_Prop(0)} />
+                            <Tab label="JSON入力" {...tab_apply_Prop(1)} />
+                        </Tabs>
+                    </Box>
+                    <TabPanel value={tabIndex} index={0}>
+                        Normal Input
+                        <Box sx={{ width: '100%' }}>
+                            <Item>
+                                <TextField margin="dense" label="問題名" fullWidth variant='standard' />
+                                <TextField margin="dense" label="問い" fullWidth variant='standard' />
+                                <TextField margin="dense" label="答え" fullWidth variant='standard'  value={selected_AddQuestion?.answer}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                    setSelected_AddQuestion({ ...selected_AddQuestion, answer: e.target.value })
+                                }}/>
+                            </Item>
+                            <Item>
+                                <Button>追加</Button>
+                            </Item>
+                        </Box>
+                    </TabPanel>
+                    <TabPanel value={tabIndex} index={1}>
+                        JSON Input
+                    </TabPanel>
                 </Box>
-                <TabPanel value={tabIndex} index={0}>
-                    Normal Input
-                </TabPanel>
-                <TabPanel value={tabIndex} index={1}>
-                    JSON Input
-                </TabPanel>
-            </Box>
-            <Box sx={{width:'100%'}}>
-                <h2>list</h2>
-            <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    Name
-                                </TableCell>
-                                <TableCell align="right">
-                                    Content
-                                </TableCell>
-                                <TableCell align="right">
-                                    Answer
-                                </TableCell>
-                                <TableCell align="right">
-                                    UUID
-                                </TableCell>
-                                <TableCell align="right">
-                                    Edit
-                                </TableCell>
-                                <TableCell align="right">
-                                    Delete
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {questions.map((question) => (
-                                <TableRow key={question.uuid}>
-                                    <TableCell component="th" scope="row">
-                                        {question.question_name}
-                                    </TableCell>
-                                    <TableCell align="right">{question.content}</TableCell>
-                                    <TableCell align="right">{question.answer}</TableCell>
-                                    <TableCell align="right">{question.uuid}</TableCell>
-                                    <TableCell align="right">
-                                        <IconButton aria-label="edit" onClick={() => {
-                                            console.log("edit: %s", question.uuid);
-                                            openEditModal(question);
-                                        }}>
-                                            <EditIcon />
-                                        </IconButton>
+                <Box sx={{ width: '100%' }}>
+                    <h2>list</h2>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>
+                                        Name
                                     </TableCell>
                                     <TableCell align="right">
-                                        <IconButton aria-label="delete" onClick={() => {
-                                            console.log("delete: %s", question.uuid);
-                                            //openEditmodal(user);
-                                            //openDeletemodal(user);
-                                        }}>
-                                            <DeleteIcon />
-                                        </IconButton>
+                                        Content
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        Answer
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        UUID
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        Edit
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        Delete
                                     </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <Dialog open={editModalIsOpen} onClose={closeEditModal}>
-                    <DialogTitle>Question編集</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Question編集機能です。あああああああああああああああああああああああああああああああああああああああああ
-                            <br />
-                            {selectedQuestion?.uuid}
-                        </DialogContentText>
-                        <TextField margin="dense" label="問題名" fullWidth variant='standard' value={selectedQuestion?.question_name}
-                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                setSelectedQuestion({ ...selectedQuestion, question_name: e.target.value })
-                            }} />
-                        <TextField margin="dense" label="問い" fullWidth variant='standard' value={selectedQuestion?.content}
-                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                setSelectedQuestion({ ...selectedQuestion, content: e.target.value })
-                            }} />
-                        <TextField margin="dense" label="答え" fullWidth variant='standard' value={selectedQuestion?.answer}
-                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                setSelectedQuestion({ ...selectedQuestion, answer: e.target.value })
-                            }} />
+                            </TableHead>
+                            <TableBody>
+                                {questions.map((question) => (
+                                    <TableRow key={question.uuid}>
+                                        <TableCell component="th" scope="row">
+                                            {question.question_name}
+                                        </TableCell>
+                                        <TableCell align="right">{question.content}</TableCell>
+                                        <TableCell align="right">{question.answer}</TableCell>
+                                        <TableCell align="right">{question.uuid}</TableCell>
+                                        <TableCell align="right">
+                                            <IconButton aria-label="edit" onClick={() => {
+                                                console.log("edit: %s", question.uuid);
+                                                openEditModal(question);
+                                            }}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <IconButton aria-label="delete" onClick={() => {
+                                                console.log("delete: %s", question.uuid);
+                                                //openEditmodal(user);
+                                                //openDeletemodal(user);
+                                            }}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <Dialog open={editModalIsOpen} onClose={closeEditModal}>
+                        <DialogTitle>Question編集</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Question編集機能です。あああああああああああああああああああああああああああああああああああああああああ
+                                <br />
+                                {selectedQuestion?.uuid}
+                            </DialogContentText>
+                            <TextField margin="dense" label="問題名" fullWidth variant='standard' value={selectedQuestion?.question_name}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                    setSelectedQuestion({ ...selectedQuestion, question_name: e.target.value })
+                                }} />
+                            <TextField margin="dense" label="問い" fullWidth variant='standard' value={selectedQuestion?.content}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                    setSelectedQuestion({ ...selectedQuestion, content: e.target.value })
+                                }} />
+                            <TextField margin="dense" label="答え" fullWidth variant='standard' value={selectedQuestion?.answer}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                    setSelectedQuestion({ ...selectedQuestion, answer: e.target.value })
+                                }} />
 
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={closeEditModal}>Cancel</Button>
-                        <Button onClick={post_edited_value_and_refresh}>Apply</Button>
-                    </DialogActions>
-                </Dialog>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={closeEditModal}>Cancel</Button>
+                            <Button onClick={post_edited_value_and_refresh}>Apply</Button>
+                        </DialogActions>
+                    </Dialog>
                 </Box>
+            </ThemeProvider>
         </>
     );
 }
