@@ -14,6 +14,9 @@ export default function QuestionManagerPage(): React.ReactElement {
     useEffect(()=>{
         getAllQuestions();
     },[]);
+    const closeEditModal = () => {
+        seteditModalIsOpen(false);
+    }
     return (
         <>
             <h1>
@@ -75,6 +78,33 @@ export default function QuestionManagerPage(): React.ReactElement {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <Dialog open={editModalIsOpen} onClose={closeEditModal}>
+                    <DialogTitle>Question編集</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Question編集機能です。あああああああああああああああああああああああああああああああああああああああああ
+                            <br />
+                            {selectedQuestion?.uuid}
+                        </DialogContentText>
+                        <TextField margin="dense" label="問題名" fullWidth variant='standard' value={selectedQuestion?.question_name}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                setSelectedQuestion({ ...selectedQuestion, question_name: e.target.value })
+                            }} />
+                        <TextField margin="dense" label="問い" fullWidth variant='standard' value={selectedQuestion?.content}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                setSelectedQuestion({ ...selectedQuestion, content: e.target.value })
+                            }} />
+                        <TextField margin="dense" label="答え" fullWidth variant='standard' value={selectedQuestion?.answer}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                setSelectedQuestion({ ...selectedQuestion, answer: e.target.value })
+                            }} />
+
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeEditModal}>Cancel</Button>
+                        <Button onClick={closeEditModal}>Apply</Button>
+                    </DialogActions>
+                </Dialog>
         </>
     );
 }
