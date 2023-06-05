@@ -119,7 +119,7 @@ export default function QuestionManagerPage(): React.ReactElement {
                             <Tab label="JSON入力" {...tab_apply_Prop(1)} />
                         </Tabs>
                     </Box>
-                    <TabPanel value={tabIndex} index={1}>
+                    <TabPanel value={tabIndex} index={0}>
                         Normal Input
                         <Box sx={{ width: '100%' }}>
                             <Item>
