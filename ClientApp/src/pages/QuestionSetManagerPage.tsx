@@ -9,6 +9,7 @@ import { Question } from '../types/Question';
 import { Question_Req } from '../types/Question_Req';
 
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
+import { useAllQuestionSets } from '../hooks/useAllQuestionSets';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -26,8 +27,8 @@ const TabPanel=(props: TabPanelProps)=> {
     const { children, value, index, ...other } = props;
     return (
         <div role="tabpanel" hidden={value !== index}
-            id={`question-add-tabpanel-${index}`}
-            aria-labelledby={`question-add-tab-${index}`}
+            id={`questionset-add-tabpanel-${index}`}
+            aria-labelledby={`questionset-add-tab-${index}`}
             {...other}>
             {value === index && (
                 <Box sx={{ p: 3 }}>
@@ -39,6 +40,7 @@ const TabPanel=(props: TabPanelProps)=> {
 }
 export default function QuestionSetManagerPage(): React.ReactElement {
     const { getAllQuestions, questions } = useAllQuestions();
+    const { getAllQuestionSets, questionsets } = useAllQuestionSets();
     const [editModalIsOpen, seteditModalIsOpen] = useState(false);
     const [selectedQuestion, setSelectedQuestion] = useState<Question>();
     const [deleteModalIsOpen, setdeleteModalIsOpen] = useState(false);
@@ -60,6 +62,7 @@ export default function QuestionSetManagerPage(): React.ReactElement {
     const [JsonUUIDSwChecked,setJsonUUIDSwChecked]=useState(false);
     useEffect(() => {
         getAllQuestions();
+        getAllQuestionSets();
     }, []);
     const closeEditModal = () => {
         seteditModalIsOpen(false);
@@ -110,7 +113,7 @@ export default function QuestionSetManagerPage(): React.ReactElement {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <h1>
-                    Question Manager
+                    QuestionSet Manager
                 </h1>
                 <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
