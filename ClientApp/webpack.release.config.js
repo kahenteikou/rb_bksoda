@@ -12,6 +12,7 @@ module.exports = {
         "404": "./src/404.tsx",
         "usermanager":"./src/usermanager.tsx",
         "questionmanager":"./src/questionmanager.tsx"
+        "questionsetmanager":"./src/questionsetmanager.tsx"
     },
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -82,6 +83,11 @@ module.exports = {
             chunks: ['questionmanager', 'vendor'],
             filename: 'questionmanager.html'
         }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            chunks: ['questionsetmanager', 'vendor'],
+            filename: 'questionsetmanager.html'
+        }),
         new CopyWebpackPlugin(
             {
                 patterns: [
@@ -111,6 +117,11 @@ module.exports = {
             template: './src/index.html',
             chunks: ['questionmanager', 'vendor'],
             filename: 'questionmanager.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            chunks: ['questionsetmanager', 'vendor'],
+            filename: 'questionsetmanager.html'
         }),
         new CopyWebpackPlugin(
             {

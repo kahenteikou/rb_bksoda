@@ -15,6 +15,7 @@ class App extends React.Component{
                     <Route path="/404.html" element={<Page404 />} />
                     <Route path="/usermanager.html" element={<UserManagerPage />} />
                     <Route path="/questionmanager.html" element={<QuestionManagerPage />} />
+                    <Route path="/questionsetmanager.html" element={<QuestionManagerPage />} />
                     <Route path="*" element={<Page404 />} />
                 </Routes>
             </BrowserRouter>

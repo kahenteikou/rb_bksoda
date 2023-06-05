@@ -49,6 +49,10 @@ module.exports = {
             template: './src/index.html',
             filename: 'questionmanager.html'
         }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'questionsetmanager.html'
+        }),
         new CopyWebpackPlugin(
             {
                 patterns:[
