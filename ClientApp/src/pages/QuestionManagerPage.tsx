@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tabs, Tab, Stack, CssBaseline } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, FormControl, IconButton, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tabs, Tab, Stack, CssBaseline, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -21,6 +21,7 @@ interface TabPanelProps {
     index: number;
     value: number;
 }
+
 const TabPanel=(props: TabPanelProps)=> {
     const { children, value, index, ...other } = props;
     return (
@@ -56,6 +57,7 @@ export default function QuestionManagerPage(): React.ReactElement {
             mode: 'dark'
         }*/
     });
+    const [JsonUUIDSwChecked,setJsonUUIDSwChecked]=useState(false);
     useEffect(() => {
         getAllQuestions();
     }, []);
@@ -117,7 +119,7 @@ export default function QuestionManagerPage(): React.ReactElement {
                             <Tab label="JSON入力" {...tab_apply_Prop(1)} />
                         </Tabs>
                     </Box>
-                    <TabPanel value={tabIndex} index={0}>
+                    <TabPanel value={tabIndex} index={1}>
                         Normal Input
                         <Box sx={{ width: '100%' }}>
                             <Item>
@@ -171,6 +173,15 @@ export default function QuestionManagerPage(): React.ReactElement {
                     </TabPanel>
                     <TabPanel value={tabIndex} index={1}>
                         JSON Input
+                        
+                        <Box sx={{ width: '100%' }}>
+                            <Item>
+                                UUID:
+                                <Switch checked={JsonUUIDSwChecked} onChange={(e)=>{
+                                    setJsonUUIDSwChecked(e.target.checked);
+                                }}/>
+                            </Item>
+                        </Box>
                     </TabPanel>
                 </Box>
                 <Box sx={{ width: '100%' }}>
