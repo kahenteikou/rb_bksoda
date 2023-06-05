@@ -159,6 +159,9 @@ export default function QuestionManagerPage(): React.ReactElement {
                                         }
                                     ).then((rp) => {
                                         getAllQuestions();
+                                        selected_AddQuestion.question_name="";
+                                        selected_AddQuestion.content="";
+                                        selected_AddQuestion.answer="";
                                     }, (err) => {
                                         console.error(err)
                                     });
