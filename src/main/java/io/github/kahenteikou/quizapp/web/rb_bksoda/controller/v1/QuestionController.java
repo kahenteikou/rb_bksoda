@@ -8,6 +8,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RequestMapping("api/v1/question_db")
@@ -60,6 +64,15 @@ public class QuestionController {
     List<Question_Set> findAll_QS(){
         return question_setRepository.findAll();
     }
+    @Operation(summary = "Get all sets_ex")
+    @GetMapping("/question_set_ex/")
+    HashMap<String,List<String>> findAll_QS_Ex(){
+        HashMap<String,List<String>> exlist= new HashMap<>();
+        for(Question_Set qs:question_setRepository.findAll()){
+            exlist.put(qs.getUuid(),List.of(qs.getQuestion_list().split(",")));
+        }
+        return exlist;
+    }
 
 
     @Operation(summary = "Create a new question set")
@@ -78,6 +91,7 @@ public class QuestionController {
     Question_Set save_QS(@RequestBody Question_Set newqs,@PathVariable String id){
         return question_setRepository.findById(id).map(qs->{
             qs.setQuestionset_name(newqs.getQuestionset_name());
+            qs.setQuestion_list(newqs.getQuestion_list());
             return question_setRepository.save(qs);
         }).orElseGet(()->{
             newqs.setUuid(id);
