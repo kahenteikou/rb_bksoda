@@ -2,6 +2,7 @@ package io.github.kahenteikou.quizapp.web.rb_bksoda.controller.v1;
 
 import io.github.kahenteikou.quizapp.web.rb_bksoda.model.Question;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.model.Question_Set;
+import io.github.kahenteikou.quizapp.web.rb_bksoda.model.Question_Set_Minimum;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.repository.Question_Repository;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.repository.Question_SetRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -64,6 +65,17 @@ public class QuestionController {
     List<Question_Set> findAll_QS(){
         return question_setRepository.findAll();
     }
+    @Operation(summary = "Get all sets name only")
+    @GetMapping("/question_set_ex_nonly/")
+    List<Question_Set_Minimum> findAll_QS_NOnly()
+    {
+        List<Question_Set_Minimum> qslist= new ArrayList<>();
+        for(Question_Set qs:question_setRepository.findAll()){
+            qslist.add(new Question_Set_Minimum(qs));
+        }
+        return qslist;
+    }
+
     @Operation(summary = "Get all sets_ex")
     @GetMapping("/question_set_ex/")
     HashMap<String,List<String>> findAll_QS_Ex(){
