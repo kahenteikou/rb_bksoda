@@ -75,6 +75,28 @@ public class QuestionController {
         }
         return qslist;
     }
+    @Operation(summary = "Get all sets name only")
+    @GetMapping("/question_set_ex_nonly/{id}/")
+    String name_question_Set_get(@PathVariable String id){
+        for(Question_Set qs:question_setRepository.findAll()){
+            if(qs.getUuid().equals(id)){
+                return qs.getQuestionset_name();
+            }
+        }
+        return "";
+    }
+    @Operation(summary = "Put all sets name only")
+    @PutMapping("/question_set_ex_nonly/{id}/")
+    String PUT_name_questionset(@RequestBody String name,@PathVariable String id){
+        for(Question_Set qs:question_setRepository.findAll()){
+            if(qs.getUuid().equals(id)){
+                qs.setQuestionset_name(name);
+                question_setRepository.save(qs);
+                return qs.getQuestionset_name();
+            }
+        }
+        return "error?";
+    }
 
     @Operation(summary = "Get all sets_ex")
     @GetMapping("/question_set_ex/")
@@ -86,6 +108,16 @@ public class QuestionController {
         return exlist;
     }
 
+    @Operation(summary = "Get all sets_ex")
+    @GetMapping("/question_set_ex/{id}/")
+    List<String> get_QS_Ex(@PathVariable String id){
+        for(Question_Set qs:question_setRepository.findAll()){
+            if(qs.getUuid().equals(id)){
+                return List.of(qs.getQuestion_list().split(","));
+            }
+        }
+        return new ArrayList<String>();
+    }
 
     @Operation(summary = "Create a new question set")
     @PostMapping("/question_set/")
