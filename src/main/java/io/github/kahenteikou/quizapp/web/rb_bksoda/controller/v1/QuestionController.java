@@ -1,5 +1,7 @@
 package io.github.kahenteikou.quizapp.web.rb_bksoda.controller.v1;
 
+import io.github.kahenteikou.quizapp.web.rb_bksoda.errResponse.ErrDetail;
+import io.github.kahenteikou.quizapp.web.rb_bksoda.errResponse.Question_NotFoundException;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.model.Question;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.model.Question_Set;
 import io.github.kahenteikou.quizapp.web.rb_bksoda.model.Question_Set_Minimum;
@@ -83,7 +85,9 @@ public class QuestionController {
                 return qs.getQuestionset_name();
             }
         }
-        return "";
+        ErrDetail errkun=new ErrDetail();
+        errkun.setDetailMsg(id+" not found");
+        throw new Question_NotFoundException(id+" not found",errkun);
     }
     @Operation(summary = "Put all sets name only")
     @PutMapping("/question_set_ex_nonly/{id}/")
