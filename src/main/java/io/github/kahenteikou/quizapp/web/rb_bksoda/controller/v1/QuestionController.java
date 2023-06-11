@@ -99,7 +99,9 @@ public class QuestionController {
                 return qs.getQuestionset_name();
             }
         }
-        return "error?";
+        ErrDetail errkun=new ErrDetail();
+        errkun.setDetailMsg(id+" not found");
+        throw new Question_NotFoundException(id+" not found",errkun);
     }
 
     @Operation(summary = "Get all sets_ex")
@@ -120,7 +122,9 @@ public class QuestionController {
                 return List.of(qs.getQuestion_list().split(","));
             }
         }
-        return new ArrayList<String>();
+        ErrDetail errkun=new ErrDetail();
+        errkun.setDetailMsg(id+" not found");
+        throw new Question_NotFoundException(id+" not found",errkun);
     }
 
     @Operation(summary = "Create a new question set")
