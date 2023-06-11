@@ -43,7 +43,6 @@ export default function QuestionSetManagerPage(): React.ReactElement {
     const { getAllQuestions, questions } = useAllQuestions();
     //const { getAllQuestionSets, questionsets } = useAllQuestionSets();
     const{getAllQuestionsets_nonly,questionsets_nonly}=useAllQuestionSet_NOnly();
-    const [editModalIsOpen, seteditModalIsOpen] = useState(false);
     const [selectedQuestion, setSelectedQuestion] = useState<Question>();
     const [deleteModalIsOpen, setdeleteModalIsOpen] = useState(false);
     const [selected_AddQuestion, setSelected_AddQuestion] = useState<Question>({
@@ -66,13 +65,6 @@ export default function QuestionSetManagerPage(): React.ReactElement {
         getAllQuestions();
         getAllQuestionsets_nonly();
     }, []);
-    const closeEditModal = () => {
-        seteditModalIsOpen(false);
-    };
-    const openEditModal = (question: Question) => {
-        setSelectedQuestion(question);
-        seteditModalIsOpen(true);
-    };
     const openDeletemodal = (question: Question) => {
         setSelectedQuestion(question);
         setdeleteModalIsOpen(true);
@@ -85,30 +77,6 @@ export default function QuestionSetManagerPage(): React.ReactElement {
             id: `question-add-tab-${index}`,
             'aria-controls': `question-add-tabpanel-${index}`,
         };
-    }
-    function post_edited_value_and_refresh() {
-        //console.log("after log:",selectedUser);
-        let request_question: Question_Req = {
-            question_name: selectedQuestion?.question_name,
-            content: selectedQuestion?.content,
-            answer: selectedQuestion?.answer
-        };
-        console.log("after log:", request_question);
-        fetch(
-            "http://localhost:8080/api/v1/question_db/question/" + selectedQuestion?.uuid,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(request_question)
-            }
-        ).then((rp) => {
-            getAllQuestions();
-        }, (err) => {
-            console.error(err)
-        });
-        closeEditModal();
     }
     return (
         <>
@@ -126,67 +94,10 @@ export default function QuestionSetManagerPage(): React.ReactElement {
                     </Box>
                     <TabPanel value={tabIndex} index={0}>
                         Normal Input
-                        <Box sx={{ width: '100%' }}>
-                            <Item>
-                                <TextField margin="dense" label="問題名" fullWidth variant='standard' value={selected_AddQuestion?.question_name} 
-                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                    setSelected_AddQuestion({ ...selected_AddQuestion, question_name: e.target.value })
-                                }}/>
-                                <TextField margin="dense" label="問い" fullWidth variant='standard' value={selected_AddQuestion?.content}
-                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                    setSelected_AddQuestion({ ...selected_AddQuestion, content: e.target.value })
-                                }}/>
-                                <TextField margin="dense" label="答え" fullWidth variant='standard'  value={selected_AddQuestion?.answer}
-                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                    setSelected_AddQuestion({ ...selected_AddQuestion, answer: e.target.value })
-                                }}/>
-                            </Item>
-                            <Item>
-                                <Button onClick={()=>{
-                                    console.log("submit");
-                                    if(selected_AddQuestion?.question_name===""||selected_AddQuestion?.content===""||selected_AddQuestion?.answer===""){
-                                        alert("空白の項目があります。");
-                                        return;
-                                    }
-                                    let request_question: Question_Req = {
-                                        question_name: selected_AddQuestion?.question_name,
-                                        answer: selected_AddQuestion?.answer,
-                                        content: selected_AddQuestion?.content
-                                    }
-
-                                    console.log("after log:", request_question);
-                                    fetch(
-                                        "http://localhost:8080/api/v1/question_db/question/",
-                                        {
-                                            method: "POST",
-                                            headers: {
-                                                "Content-Type": "application/json"
-                                            },
-                                            body: JSON.stringify(request_question)
-                                        }
-                                    ).then((rp) => {
-                                        getAllQuestions();
-                                        selected_AddQuestion.question_name="";
-                                        selected_AddQuestion.content="";
-                                        selected_AddQuestion.answer="";
-                                    }, (err) => {
-                                        console.error(err)
-                                    });
-                                }}>追加</Button>
-                            </Item>
-                        </Box>
                     </TabPanel>
                     <TabPanel value={tabIndex} index={1}>
                         JSON Input
                         
-                        <Box sx={{ width: '100%' }}>
-                            <Item>
-                                UUID:
-                                <Switch checked={JsonUUIDSwChecked} onChange={(e)=>{
-                                    setJsonUUIDSwChecked(e.target.checked);
-                                }}/>
-                            </Item>
-                        </Box>
                     </TabPanel>
                 </Box>
                 <Box sx={{ width: '100%' }}>
@@ -197,12 +108,6 @@ export default function QuestionSetManagerPage(): React.ReactElement {
                                 <TableRow>
                                     <TableCell>
                                         Name
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        Content
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        Answer
                                     </TableCell>
                                     <TableCell align="right">
                                         UUID
@@ -216,27 +121,25 @@ export default function QuestionSetManagerPage(): React.ReactElement {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {questions.map((question) => (
-                                    <TableRow key={question.uuid}>
+                                {questionsets_nonly.map((questionset_n) => (
+                                    <TableRow key={questionset_n.uuid}>
                                         <TableCell component="th" scope="row">
-                                            {question.question_name}
+                                            {questionset_n.questionset_name}
                                         </TableCell>
-                                        <TableCell align="right">{question.content}</TableCell>
-                                        <TableCell align="right">{question.answer}</TableCell>
-                                        <TableCell align="right">{question.uuid}</TableCell>
+                                        <TableCell align="right">{questionset_n.uuid}</TableCell>
                                         <TableCell align="right">
                                             <IconButton aria-label="edit" onClick={() => {
-                                                console.log("edit: %s", question.uuid);
-                                                openEditModal(question);
+                                                console.log("edit: %s", questionset_n.uuid);
+                                                //openEditModal(question);
                                             }}>
                                                 <EditIcon />
                                             </IconButton>
                                         </TableCell>
                                         <TableCell align="right">
                                             <IconButton aria-label="delete" onClick={() => {
-                                                console.log("delete: %s", question.uuid);
+                                                console.log("delete: %s", questionset_n.uuid);
                                                 //openEditmodal(user);
-                                                openDeletemodal(question);
+                                                //openDeletemodal(question);
                                             }}>
                                                 <DeleteIcon />
                                             </IconButton>
@@ -246,34 +149,6 @@ export default function QuestionSetManagerPage(): React.ReactElement {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <Dialog open={editModalIsOpen} onClose={closeEditModal}>
-                        <DialogTitle>Question編集</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Question編集機能です。あああああああああああああああああああああああああああああああああああああああああ
-                                <br />
-                                {selectedQuestion?.uuid}
-                            </DialogContentText>
-                            <TextField margin="dense" label="問題名" fullWidth variant='standard' value={selectedQuestion?.question_name}
-                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                    setSelectedQuestion({ ...selectedQuestion, question_name: e.target.value })
-                                }} />
-                            <TextField margin="dense" label="問い" fullWidth variant='standard' value={selectedQuestion?.content}
-                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                    setSelectedQuestion({ ...selectedQuestion, content: e.target.value })
-                                }} />
-                            <TextField margin="dense" label="答え" fullWidth variant='standard' value={selectedQuestion?.answer}
-                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                                    setSelectedQuestion({ ...selectedQuestion, answer: e.target.value })
-                                }} />
-
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={closeEditModal}>Cancel</Button>
-                            <Button onClick={post_edited_value_and_refresh}>Apply</Button>
-                        </DialogActions>
-                    </Dialog>
-                    
                 <Dialog open={deleteModalIsOpen} onClose={close_deletemodal}>
                     <DialogTitle>
                         ユーザーを削除しますか？
