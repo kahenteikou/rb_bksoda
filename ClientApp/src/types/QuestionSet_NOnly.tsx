@@ -1,4 +1,4 @@
-type QuestionSet_NOnly={
+export type QuestionSet_NOnly={
     uuid?:string;
     questionset_name?:string;
 }

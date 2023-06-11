@@ -10,6 +10,7 @@ import { Question_Req } from '../types/Question_Req';
 
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import { useAllQuestionSets } from '../hooks/useAllQuestionSets';
+import { useAllQuestionSet_NOnly } from '../hooks/useAllQuestionSet_NOnly';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -40,7 +41,8 @@ const TabPanel=(props: TabPanelProps)=> {
 }
 export default function QuestionSetManagerPage(): React.ReactElement {
     const { getAllQuestions, questions } = useAllQuestions();
-    const { getAllQuestionSets, questionsets } = useAllQuestionSets();
+    //const { getAllQuestionSets, questionsets } = useAllQuestionSets();
+    const{getAllQuestionsets_nonly,questionsets_nonly}=useAllQuestionSet_NOnly();
     const [editModalIsOpen, seteditModalIsOpen] = useState(false);
     const [selectedQuestion, setSelectedQuestion] = useState<Question>();
     const [deleteModalIsOpen, setdeleteModalIsOpen] = useState(false);
@@ -62,7 +64,7 @@ export default function QuestionSetManagerPage(): React.ReactElement {
     const [JsonUUIDSwChecked,setJsonUUIDSwChecked]=useState(false);
     useEffect(() => {
         getAllQuestions();
-        getAllQuestionSets();
+        getAllQuestionsets_nonly();
     }, []);
     const closeEditModal = () => {
         seteditModalIsOpen(false);
