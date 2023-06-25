@@ -57,6 +57,17 @@ module.exports = {
             template: './src/index.html',
             filename: 'questionsetedit.html'
         }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'targetscreen.html'
+        }),
+        
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'screencontroller.html'
+        }),
+        
+
         new CopyWebpackPlugin(
             {
                 patterns:[

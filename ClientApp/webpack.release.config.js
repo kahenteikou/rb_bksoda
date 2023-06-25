@@ -13,7 +13,9 @@ module.exports = {
         "usermanager":"./src/usermanager.tsx",
         "questionmanager":"./src/questionmanager.tsx",
         "questionsetmanager":"./src/questionsetmanager.tsx",
-        "questionsetedit":"./src/questionsetedit.tsx"
+        "questionsetedit":"./src/questionsetedit.tsx",
+        "targetscreen":"./src/targetscreen.tsx",
+        "screencontroller":"./src/screencontroller.tsx"
     },
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -94,6 +96,11 @@ module.exports = {
             chunks: ['questionsetedit', 'vendor'],
             filename: 'questionsetedit.html'
         }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            chunks: ['targetscreen', 'vendor'],
+            filename: 'targetscreen.html'
+        }),
         new CopyWebpackPlugin(
             {
                 patterns: [
@@ -133,6 +140,16 @@ module.exports = {
             template: './src/index.html',
             chunks: ['questionsetedit', 'vendor'],
             filename: 'questionsetedit.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            chunks: ['targetscreen', 'vendor'],
+            filename: 'targetscreen.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            chunks: ['screencontroller', 'vendor'],
+            filename: 'screencontroller.html'
         }),
         new CopyWebpackPlugin(
             {
