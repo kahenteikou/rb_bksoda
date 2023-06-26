@@ -16,6 +16,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+// https://mvnrepository.com/artifact/org.springframework/spring-messaging
+	implementation("org.springframework:spring-messaging")
 
 
 	compileOnly ("org.projectlombok:lombok:1.18.26")
@@ -23,6 +25,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	// https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
 	implementation("org.mariadb.jdbc:mariadb-java-client:3.1.4")
+	// https://mvnrepository.com/artifact/org.webjars/stomp-websocket
+	implementation("org.webjars:stomp-websocket:2.3.4")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
