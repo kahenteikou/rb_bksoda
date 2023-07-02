@@ -8,7 +8,6 @@ import QuestionSetManagerPage from './pages/QuestionSetManagerPage';
 import QuestionSetEditPage from './pages/QuestionSetEditPage';
 import ScreenControllerPage from './pages/ScreenControllerPage';
 import TargetScreenPage from './pages/TargetScreenPage';
-
 class App extends React.Component{
     public render():React.ReactNode{
         return(

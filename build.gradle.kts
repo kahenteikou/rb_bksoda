@@ -18,6 +18,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 // https://mvnrepository.com/artifact/org.springframework/spring-messaging
 	implementation("org.springframework:spring-messaging")
+	implementation("org.springframework.boot:spring-boot-starter-websocket")
 
 
 	compileOnly ("org.projectlombok:lombok:1.18.26")
