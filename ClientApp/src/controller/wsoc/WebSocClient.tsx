@@ -1,8 +1,8 @@
 import { json } from "react-router";
 import ReconnectingWebSocket from "reconnecting-websocket";
 
-type SubScriber<T=unknown>=(message:T)=>void|(()=>void)
-type WebSocClientConf={
+export type SubScriber<T=unknown>=(message:T)=>void|(()=>void);
+export type WebSocClientConf={
     urls:string[]
 }
 export class WebSocClient{
