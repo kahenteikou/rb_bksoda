@@ -15,3 +15,10 @@ export const WebSocProvider=({client,children}:WebSocProviderProps)=>{
     },[client])
     return <WebSocContext.Provider value={client}>{children}</WebSocContext.Provider>
 }
+export const useWebSocClient=()=>{
+    const client=React.useContext(WebSocContext);
+    if(!client){
+        throw new Error("Ctx is null");
+    }
+    return client;
+}
