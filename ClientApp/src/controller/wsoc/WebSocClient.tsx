@@ -37,4 +37,14 @@ export class WebSocClient{
         }
         target.send(JSON.stringify(msg));
     }
+    subscribe=(url:string,subscriber:SubScriber|SubScriber[])=>{
+        const target=this.subscribers.get(url);
+        if(target){
+            if(Array.isArray(subscriber)){
+                subscriber.forEach((s)=>target.add(s));
+            }else{
+                target.add(subscriber);
+            }
+        }
+    }
 }
