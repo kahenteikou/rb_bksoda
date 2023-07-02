@@ -47,4 +47,21 @@ export class WebSocClient{
             }
         }
     }
+    unsubscribe=(url:string,subscriber:SubScriber|SubScriber[])=>{
+        const target=this.subscribers.get(url);
+        if(target){
+            if(Array.isArray(subscriber)){
+                subscriber.forEach((s)=>target.delete(s));
+            }else{
+                target.delete(subscriber);
+            }
+        }
+    }
+    close=()=>{
+        this.wsocs.forEach((w,u)=>{
+            console.log(`closing...${u}`);
+            w.close();
+        })
+        this.subscribers.forEach((s)=>s.clear());
+    }
 }
