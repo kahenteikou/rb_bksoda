@@ -1,3 +1,4 @@
+import { json } from "react-router";
 import ReconnectingWebSocket from "reconnecting-websocket";
 
 type SubScriber<T=unknown>=(message:T)=>void|(()=>void)
@@ -27,5 +28,13 @@ export class WebSocClient{
             });
             this.wsocs.set(url,ws);
         });
+    }
+    get=<T,>(url:string)=>this.data?.[url] as T;
+    send=(url:string,msg:unknown)=>{
+        const target=this.wsocs.get(url);
+        if(target?.readyState!=WebSocket.OPEN){
+            throw new Error("websoc is not ready.");
+        }
+        target.send(JSON.stringify(msg));
     }
 }
