@@ -8,8 +8,8 @@ import org.springframework.web.util.HtmlUtils;
 
 @Controller
 public class Main_WebSocketController {
-    @MessageMapping("api/v1/websocket/msg_1")
-    @SendTo("api/v1/websocket/receiver/msg_1")
+    @MessageMapping("/msg_1")
+    @SendTo("/wsocreceiver/msg_1")
     public MainWebSocketMsg send(MainWebSocketMsg msg) throws Exception{
         Thread.sleep(100);
         return new MainWebSocketMsg(HtmlUtils.htmlEscape(msg.getCommand()),HtmlUtils.htmlEscape(msg.getContent()));
