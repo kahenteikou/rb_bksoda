@@ -10,8 +10,7 @@ import { WebSocClient } from './controller/wsoc/WebSocClient';
 import { WebSocProvider } from './controller/wsoc/WebSocProvider';
 
 const client = new WebSocClient({
-    urls:["ws://localhost:8080/api/v1/websocket/msg_1",
-"ws://localhost:8080/api/v1/websocket/receiver/msg_1"]
+    urls:["ws://localhost:8080/wsoc_rp"]
 })
 root.render(
     <React.StrictMode>
