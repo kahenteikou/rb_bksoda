@@ -9,7 +9,7 @@ export default function TargetScreenPage():React.ReactElement{
     return (
             
         <>
-            Target Screen
+            
         </>
     );
 }
